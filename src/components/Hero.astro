@@ -4,12 +4,13 @@ const heroImage =
 ---
 
 <section id="hero" class="relative min-h-screen flex items-center overflow-hidden">
-  <!-- Ozadje -->
+  <!-- Ozadje s parallax -->
   <div class="absolute inset-0">
     <img
+      id="hero-parallax"
       src={heroImage}
       alt="Kristjan Hočevar igra kitaro v gozdu"
-      class="w-full h-full object-cover object-center"
+      class="w-full h-[120%] object-cover object-center will-change-transform"
       loading="eager"
     />
     <!-- Gradient overlay -->
@@ -30,13 +31,13 @@ const heroImage =
     <div class="hero-word flex flex-col sm:flex-row items-start gap-4" style="animation-delay: 0.45s">
       <a
         href="#videospoti"
-        class="px-8 py-3 bg-accent text-bg font-semibold tracking-wider uppercase text-sm hover:bg-accent/90 transition-colors rounded-sm"
+        class="btn-fill-reverse px-8 py-3 bg-accent text-bg font-semibold tracking-wider uppercase text-sm rounded-sm"
       >
         Poslušaj
       </a>
       <a
         href="#kontakt"
-        class="px-8 py-3 border border-text/30 text-text font-semibold tracking-wider uppercase text-sm hover:border-accent hover:text-accent transition-colors rounded-sm"
+        class="btn-fill px-8 py-3 border border-text/30 text-text font-semibold tracking-wider uppercase text-sm rounded-sm"
       >
         Kontakt
       </a>
@@ -72,3 +73,20 @@ const heroImage =
     animation: heroSlideIn 0.8s ease-out forwards;
   }
 </style>
+
+<script>
+  // Parallax efekt na hero sliki
+  const heroImg = document.getElementById("hero-parallax");
+  const heroSection = document.getElementById("hero");
+
+  if (heroImg && heroSection) {
+    window.addEventListener("scroll", () => {
+      const scrollY = window.scrollY;
+      const heroHeight = heroSection.offsetHeight;
+      if (scrollY <= heroHeight) {
+        const offset = scrollY * 0.4;
+        heroImg.style.transform = `translateY(${offset}px)`;
+      }
+    }, { passive: true });
+  }
+</script>

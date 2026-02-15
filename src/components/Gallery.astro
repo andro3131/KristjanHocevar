@@ -34,24 +34,28 @@ const images = [
       <p class="text-accent tracking-[0.3em] uppercase text-sm mb-3 font-semibold">
         Galerija
       </p>
-      <h2 class="font-serif text-4xl md:text-5xl font-bold">
-        Trenutki
+      <h2 class="reveal-text font-serif text-4xl md:text-5xl font-bold" data-reveal>
+        <span class="word"><span class="word-inner">Trenutki</span></span>
       </h2>
     </div>
 
-    <!-- Masonry-like grid -->
+    <!-- Masonry-like grid s staggered entrance -->
     <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
       {
         images.map((image, i) => (
-          <div class="fade-in break-inside-avoid">
-            <div class="group relative overflow-hidden rounded-sm">
+          <div
+            class="stagger-item break-inside-avoid"
+            data-stagger
+            style={`transition-delay: ${i * 0.12}s`}
+          >
+            <div class="group relative overflow-hidden rounded-sm cursor-pointer">
               <img
                 src={image.src}
                 alt={image.alt}
-                class="w-full block transition-transform duration-500 group-hover:scale-105"
+                class="w-full block transition-transform duration-700 group-hover:scale-105"
                 loading="lazy"
               />
-              <div class="absolute inset-0 bg-bg/0 group-hover:bg-bg/20 transition-colors duration-300" />
+              <div class="absolute inset-0 bg-bg/0 group-hover:bg-bg/20 transition-colors duration-500" />
             </div>
           </div>
         ))

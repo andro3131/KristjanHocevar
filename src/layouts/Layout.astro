@@ -6,7 +6,7 @@ interface Props {
 
 const {
   title = "Kristjan Hočevar | Kantavtor",
-  description = "Kristjan Hočevar - kantavtor, akusticna kitara, avtorska glasba.",
+  description = "Kristjan Hočevar - kantavtor, akustična kitara, avtorska glasba.",
 } = Astro.props;
 
 import "../styles/global.css";
@@ -42,7 +42,7 @@ import "../styles/global.css";
     <slot />
 
     <script>
-      // Fade-in animacija ob scrollu
+      // Skupen IntersectionObserver za vse animacije
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -54,8 +54,30 @@ import "../styles/global.css";
         { threshold: 0.1 }
       );
 
+      // Fade-in elementi
       document.querySelectorAll(".fade-in").forEach((el) => {
         observer.observe(el);
+      });
+
+      // Text reveal elementi
+      document.querySelectorAll("[data-reveal]").forEach((el) => {
+        observer.observe(el);
+      });
+
+      // Stagger elementi
+      const staggerObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.05 }
+      );
+
+      document.querySelectorAll("[data-stagger]").forEach((el) => {
+        staggerObserver.observe(el);
       });
     </script>
   </body>

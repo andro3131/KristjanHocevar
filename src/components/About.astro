@@ -30,14 +30,18 @@ const aboutImage =
         >
           O meni
         </p>
-        <h2 class="font-serif text-4xl md:text-5xl font-bold mb-8">
-          Zgodbe,<br />spete z dušo
+        <h2 class="reveal-text font-serif text-4xl md:text-5xl font-bold mb-8" data-reveal>
+          <span class="word"><span class="word-inner">Zgodbe,</span></span>
+          <br />
+          <span class="word"><span class="word-inner" style="transition-delay: 0.1s">spete</span></span>
+          <span class="word"><span class="word-inner" style="transition-delay: 0.2s">z</span></span>
+          <span class="word"><span class="word-inner" style="transition-delay: 0.3s">dušo</span></span>
         </h2>
         <div class="space-y-4 text-muted leading-relaxed">
           <p>
-            Kristjan Hočevar je kantavtor, ki s svojo akusticno kitaro in
-            glasom prica zgodbe, ki se dotaknejo. Njegove avtorske pesmi so
-            iskrene, intimne in polne cutenj.
+            Kristjan Hočevar je kantavtor, ki s svojo akustično kitaro in
+            glasom priča zgodbe, ki se dotaknejo. Njegove avtorske pesmi so
+            iskrene, intimne in polne čutenj.
           </p>
           <p>
             Nastopa samostojno ali v družbi drugih glasbenikov. Doslej je izdal
@@ -47,12 +51,12 @@ const aboutImage =
         <div class="mt-8">
           <a
             href="#videospoti"
-            class="inline-flex items-center gap-2 text-accent hover:text-accent/80 transition-colors font-semibold"
+            class="inline-flex items-center gap-2 text-accent hover:text-accent/80 transition-colors font-semibold group"
           >
             Poslušaj pesmi
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="w-4 h-4"
+              class="w-4 h-4 transition-transform group-hover:translate-x-1"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
