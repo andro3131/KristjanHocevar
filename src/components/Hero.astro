@@ -20,7 +20,7 @@ const heroImage =
 
   <!-- Vsebina - levo poravnano -->
   <div class="relative z-10 text-left px-6 md:px-16 lg:px-24 mt-20 max-w-3xl">
-    <h1 class="font-serif text-6xl md:text-8xl lg:text-9xl font-bold mb-4 tracking-tight">
+    <h1 class="hero-float font-serif text-6xl md:text-8xl lg:text-9xl font-bold mb-4 tracking-tight">
       <span class="hero-word inline-block">Kristjan</span>
       <br />
       <span class="hero-word inline-block text-accent" style="animation-delay: 0.15s">Hočevar</span>
@@ -71,6 +71,20 @@ const heroImage =
   .hero-word {
     opacity: 0;
     animation: heroSlideIn 0.8s ease-out forwards;
+  }
+
+  @keyframes heroFloat {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .hero-float {
+    animation: heroFloat 4s ease-in-out infinite;
+    animation-delay: 1s;
   }
 </style>
 
