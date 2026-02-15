@@ -1,0 +1,61 @@
+---
+const images = [
+  {
+    src: "https://res.cloudinary.com/dewf3zos0/image/upload/w_800,q_auto,f_auto/v1771190903/Screenshot_2026-02-15_at_21.49_copy_z3lroc.jpg",
+    alt: "Kristjan Hočevar nastop",
+  },
+  {
+    src: "https://res.cloudinary.com/dewf3zos0/image/upload/w_800,q_auto,f_auto/v1771190900/Screenshot_2026-02-15_at_22.10_copy_pp9xdw.jpg",
+    alt: "Kristjan Hočevar nastop",
+  },
+  {
+    src: "https://res.cloudinary.com/dewf3zos0/image/upload/w_800,q_auto,f_auto/v1771190897/Screenshot_2026-02-15_at_21.52_copy3_e2ff8v.jpg",
+    alt: "Kristjan Hočevar nastop",
+  },
+  {
+    src: "https://res.cloudinary.com/dewf3zos0/image/upload/w_800,q_auto,f_auto/v1771190895/Screenshot_2026-02-15_at_21.50_copy_kzoc8n.jpg",
+    alt: "Kristjan Hočevar nastop",
+  },
+  {
+    src: "https://res.cloudinary.com/dewf3zos0/image/upload/w_800,q_auto,f_auto/v1771190891/Screenshot_2026-02-15_at_21.52_copy_tnadik.jpg",
+    alt: "Kristjan Hočevar nastop",
+  },
+  {
+    src: "https://res.cloudinary.com/dewf3zos0/image/upload/w_800,q_auto,f_auto/v1771190889/Screenshot_2026-02-15_at_21.50_copy2_qks0df.jpg",
+    alt: "Kristjan Hočevar nastop",
+  },
+];
+---
+
+<section id="galerija" class="py-24 md:py-32">
+  <div class="max-w-6xl mx-auto px-6">
+    <!-- Naslov -->
+    <div class="text-center mb-16 fade-in">
+      <p class="text-accent tracking-[0.3em] uppercase text-sm mb-3 font-semibold">
+        Galerija
+      </p>
+      <h2 class="font-serif text-4xl md:text-5xl font-bold">
+        Trenutki
+      </h2>
+    </div>
+
+    <!-- Masonry-like grid -->
+    <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+      {
+        images.map((image, i) => (
+          <div class="fade-in break-inside-avoid">
+            <div class="group relative overflow-hidden rounded-sm">
+              <img
+                src={image.src}
+                alt={image.alt}
+                class="w-full block transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-bg/0 group-hover:bg-bg/20 transition-colors duration-300" />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
