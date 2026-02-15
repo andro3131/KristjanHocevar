@@ -1,0 +1,71 @@
+---
+const aboutImage =
+  "https://res.cloudinary.com/dewf3zos0/image/upload/w_800,q_auto,f_auto/v1771190908/564612247_25379652824975888_8730496612735750076_n_j6ypor.jpg";
+---
+
+<section id="o-meni" class="py-24 md:py-32">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+      <!-- Slika -->
+      <div class="fade-in order-2 md:order-1">
+        <div class="relative">
+          <img
+            src={aboutImage}
+            alt="Kristjan Hocevar"
+            class="w-full rounded-sm shadow-2xl"
+            loading="lazy"
+          />
+          <!-- Dekorativni okvir -->
+          <div
+            class="absolute -bottom-4 -right-4 w-full h-full border-2 border-accent/30 rounded-sm -z-10"
+          >
+          </div>
+        </div>
+      </div>
+
+      <!-- Besedilo -->
+      <div class="fade-in order-1 md:order-2">
+        <p
+          class="text-accent tracking-[0.3em] uppercase text-sm mb-3 font-semibold"
+        >
+          O meni
+        </p>
+        <h2 class="font-serif text-4xl md:text-5xl font-bold mb-8">
+          Zgodbe,<br />spete z dušo
+        </h2>
+        <div class="space-y-4 text-muted leading-relaxed">
+          <p>
+            Kristjan Hocevar je kantavtor, ki s svojo akusticno kitaro in
+            glasom prica zgodbe, ki se dotaknejo. Njegove avtorske pesmi so
+            iskrene, intimne in polne cutenj.
+          </p>
+          <p>
+            Nastopa samostojno ali v družbi drugih glasbenikov. Doslej je izdal
+            dve avtorski pesmi z videospotom, tretja pa je že na poti.
+          </p>
+        </div>
+        <div class="mt-8">
+          <a
+            href="#videospoti"
+            class="inline-flex items-center gap-2 text-accent hover:text-accent/80 transition-colors font-semibold"
+          >
+            Poslušaj pesmi
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

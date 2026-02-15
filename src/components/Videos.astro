@@ -1,0 +1,86 @@
+---
+interface Video {
+  id: string;
+  title: string;
+  coming?: boolean;
+}
+
+const videos: Video[] = [
+  {
+    id: "VIDEO_ID_1",
+    title: "Pesem 1",
+  },
+  {
+    id: "VIDEO_ID_2",
+    title: "Pesem 2",
+  },
+  {
+    id: "",
+    title: "Kmalu ...",
+    coming: true,
+  },
+];
+---
+
+<section id="videospoti" class="py-24 md:py-32 bg-surface">
+  <div class="max-w-6xl mx-auto px-6">
+    <!-- Naslov -->
+    <div class="text-center mb-16 fade-in">
+      <p class="text-accent tracking-[0.3em] uppercase text-sm mb-3 font-semibold">
+        Videospoti
+      </p>
+      <h2 class="font-serif text-4xl md:text-5xl font-bold">
+        Glasba v slikah
+      </h2>
+    </div>
+
+    <!-- Video grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {
+        videos.map((video) => (
+          <div class="fade-in">
+            {video.coming ? (
+              <div class="aspect-video bg-bg/50 rounded-sm flex items-center justify-center border border-accent/20">
+                <div class="text-center">
+                  <div class="w-16 h-16 mx-auto mb-4 rounded-full border-2 border-accent/30 flex items-center justify-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="w-6 h-6 text-accent/50"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                      />
+                    </svg>
+                  </div>
+                  <p class="text-muted font-serif text-xl italic">{video.title}</p>
+                </div>
+              </div>
+            ) : (
+              <div class="group">
+                <div class="aspect-video bg-bg rounded-sm overflow-hidden shadow-lg">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${video.id}`}
+                    title={video.title}
+                    class="w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    loading="lazy"
+                  />
+                </div>
+                <h3 class="mt-4 font-serif text-xl text-text group-hover:text-accent transition-colors">
+                  {video.title}
+                </h3>
+              </div>
+            )}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

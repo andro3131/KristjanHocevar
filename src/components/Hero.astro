@@ -1,0 +1,51 @@
+---
+const heroImage =
+  "https://res.cloudinary.com/dewf3zos0/image/upload/w_1920,q_auto,f_auto/v1771190911/565304430_25379658718308632_6215203515395913864_n_1_hper69.jpg";
+---
+
+<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+  <!-- Ozadje -->
+  <div class="absolute inset-0">
+    <img
+      src={heroImage}
+      alt="Kristjan Hocevar igra kitaro v gozdu"
+      class="w-full h-full object-cover object-center"
+      loading="eager"
+    />
+    <!-- Gradient overlay -->
+    <div class="absolute inset-0 bg-gradient-to-b from-bg/40 via-bg/20 to-bg"></div>
+  </div>
+
+  <!-- Vsebina -->
+  <div class="relative z-10 text-center px-6 mt-20">
+    <h1 class="font-serif text-6xl md:text-8xl lg:text-9xl font-bold mb-4 tracking-tight">
+      Kristjan
+      <br />
+      <span class="text-accent">Hocevar</span>
+    </h1>
+    <p class="text-lg md:text-xl text-muted tracking-[0.3em] uppercase mb-10">
+      kantavtor
+    </p>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a
+        href="#videospoti"
+        class="px-8 py-3 bg-accent text-bg font-semibold tracking-wider uppercase text-sm hover:bg-accent/90 transition-colors rounded-sm"
+      >
+        Poslušaj
+      </a>
+      <a
+        href="#kontakt"
+        class="px-8 py-3 border border-text/30 text-text font-semibold tracking-wider uppercase text-sm hover:border-accent hover:text-accent transition-colors rounded-sm"
+      >
+        Kontakt
+      </a>
+    </div>
+  </div>
+
+  <!-- Scroll indikator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
+    <div class="w-6 h-10 border-2 border-text/30 rounded-full flex justify-center">
+      <div class="w-1 h-3 bg-text/50 rounded-full mt-2 animate-bounce"></div>
+    </div>
+  </div>
+</section>
