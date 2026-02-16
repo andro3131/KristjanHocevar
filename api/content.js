@@ -51,7 +51,12 @@ export default async function handler(req, res) {
 
     const ghRes = await githubApi(`content/${file}.json`);
     if (!ghRes.ok) {
-      return res.status(ghRes.status).json({ error: "Napaka pri branju" });
+      let errDetail = "Napaka pri branju";
+      try {
+        const ghErr = await ghRes.json();
+        errDetail += ": " + (ghErr.message || JSON.stringify(ghErr));
+      } catch (_) {}
+      return res.status(ghRes.status).json({ error: errDetail });
     }
 
     const data = await ghRes.json();
