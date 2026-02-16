@@ -65,5 +65,6 @@ export interface ContactContent {
   title: string[];
   subtitle: string;
   email: string;
+  phone?: string;
   socialLinks: { name: string; url: string }[];
 }
