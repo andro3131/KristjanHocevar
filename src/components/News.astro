@@ -171,6 +171,16 @@ const latestNews = allNews.slice(0, 5);
               allowfullscreen
             ></iframe>
           </div>
+          <div id="news-modal-video" class="w-full aspect-video hidden">
+            <video
+              class="w-full h-full object-cover"
+              controls
+              playsinline
+              preload="metadata"
+            >
+              <source src="" type="video/mp4" />
+            </video>
+          </div>
         </div>
 
         <!-- Besedilo -->
@@ -202,6 +212,9 @@ const latestNews = allNews.slice(0, 5);
   const modalImage = modalImageWrap.querySelector("img") as HTMLImageElement;
   const modalYoutubeWrap = document.getElementById("news-modal-youtube")!;
   const modalYoutubeIframe = modalYoutubeWrap.querySelector("iframe") as HTMLIFrameElement;
+  const modalVideoWrap = document.getElementById("news-modal-video")!;
+  const modalVideo = modalVideoWrap.querySelector("video") as HTMLVideoElement;
+  const modalVideoSource = modalVideo.querySelector("source") as HTMLSourceElement;
   const modalDate = document.getElementById("news-modal-date")!;
   const modalType = document.getElementById("news-modal-type")!;
   const modalTitle = document.getElementById("news-modal-title")!;
@@ -212,15 +225,23 @@ const latestNews = allNews.slice(0, 5);
     const item = allNews.find((n) => n.id === newsId);
     if (!item) return;
 
-    // YouTube ali slika
+    // Skrij vse hero elemente
+    modalImageWrap.classList.add("hidden");
+    modalYoutubeWrap.classList.add("hidden");
+    modalVideoWrap.classList.add("hidden");
+    modalYoutubeIframe.src = "";
+    modalVideo.pause();
+    modalVideoSource.src = "";
+
     if (item.youtube) {
-      modalImageWrap.classList.add("hidden");
       modalYoutubeWrap.classList.remove("hidden");
       modalYoutubeIframe.src = `https://www.youtube-nocookie.com/embed/${item.youtube}`;
       modalYoutubeIframe.title = item.title;
+    } else if (item.video) {
+      modalVideoWrap.classList.remove("hidden");
+      modalVideoSource.src = item.video;
+      modalVideo.load();
     } else {
-      modalYoutubeWrap.classList.add("hidden");
-      modalYoutubeIframe.src = "";
       modalImageWrap.classList.remove("hidden");
       modalImage.src = item.images?.[0] || item.thumbnail;
       modalImage.alt = item.title;
@@ -282,8 +303,9 @@ const latestNews = allNews.slice(0, 5);
     modalContent.classList.add("translate-y-8");
     modalContent.classList.remove("translate-y-0");
     document.body.style.overflow = "";
-    // Ustavi YT video
+    // Ustavi medije
     modalYoutubeIframe.src = "";
+    modalVideo.pause();
     setTimeout(() => {
       modal.classList.add("pointer-events-none");
       modal.classList.remove("pointer-events-auto");

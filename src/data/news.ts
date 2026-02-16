@@ -7,6 +7,7 @@ export interface NewsItem {
   thumbnail: string;
   images?: string[];
   youtube?: string;
+  video?: string;
   type: "nastop" | "novica";
   upcoming?: boolean;
 }
@@ -65,6 +66,32 @@ export const allNews: NewsItem[] = [
     images: [
       "https://res.cloudinary.com/dewf3zos0/image/upload/w_900,q_auto,f_auto/v1771236947/504046645_18047778170570840_4408957813491103299_n_arxmdx.jpg",
     ],
+    type: "nastop",
+  },
+  {
+    id: "nastop-divana",
+    date: "2024-08-25",
+    title: "Nastop z Majo Marinčič - Divana",
+    description: "Ko da dotaknem nebo i anđele vse.",
+    fullText:
+      "Ko da dotaknem nebo i anđele vse. Nastop z Majo Marinčič - Divana.",
+    video:
+      "https://res.cloudinary.com/dewf3zos0/video/upload/v1771237056/AQPBTB3SpCScaLwxgFyM_Sh8FUtO8xeigcjN7TNiNi7sc3p-2OKd0emKMWXKRr74as8zKAz23wnaETXjkUTc8-4NlSDSklE0PVdpbsQRsv0XXQ_qa5ej6.mp4",
+    thumbnail:
+      "https://res.cloudinary.com/dewf3zos0/video/upload/w_400,h_250,c_fill,g_auto,q_auto,f_auto,so_1/v1771237056/AQPBTB3SpCScaLwxgFyM_Sh8FUtO8xeigcjN7TNiNi7sc3p-2OKd0emKMWXKRr74as8zKAz23wnaETXjkUTc8-4NlSDSklE0PVdpbsQRsv0XXQ_qa5ej6.jpg",
+    type: "nastop",
+  },
+  {
+    id: "poroka-benedikt",
+    date: "2024-07-21",
+    title: "Za vse življenje",
+    description: "Ena lepa skladbica iz sobotne poroke v Benediktu.",
+    fullText:
+      "Ena lepa skladbica iz sobotne poroke v Benediktu in naj bo res za vse življenje.",
+    video:
+      "https://res.cloudinary.com/dewf3zos0/video/upload/v1771237543/AQMgs28fMTo4H9rexyGlCImnm7IcXJ2i4Y7ckuURVO2qqsqcglHue66hnhunXBHUZ8byL4enMwtm2-EV79r6Pt3H_jsleqs.mp4",
+    thumbnail:
+      "https://res.cloudinary.com/dewf3zos0/video/upload/w_400,h_250,c_fill,g_auto,q_auto,f_auto,so_1/v1771237543/AQMgs28fMTo4H9rexyGlCImnm7IcXJ2i4Y7ckuURVO2qqsqcglHue66hnhunXBHUZ8byL4enMwtm2-EV79r6Pt3H_jsleqs.jpg",
     type: "nastop",
   },
 ];
