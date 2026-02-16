@@ -22,7 +22,7 @@ const iconPaths: Record<string, string> = {
       </p>
       <h2 class="reveal-text font-serif text-4xl md:text-5xl font-bold" data-reveal>
         {contact.title.map((word, i) => (
-          <span class="word"><span class="word-inner" style={i > 0 ? `transition-delay: ${i * 0.15}s` : ""}>{word}</span></span>
+          <><span class="word"><span class="word-inner" style={i > 0 ? `transition-delay: ${i * 0.15}s` : ""}>{word}</span></span>{" "}</>
         ))}
       </h2>
       <p class="mt-6 text-muted max-w-lg mx-auto leading-relaxed">
