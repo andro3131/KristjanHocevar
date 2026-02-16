@@ -1,0 +1,122 @@
+---
+interface NewsItem {
+  date: string;
+  title: string;
+  description: string;
+  type: "nastop" | "novica";
+  upcoming?: boolean;
+}
+
+const news: NewsItem[] = [
+  {
+    date: "2026-03-15",
+    title: "Nastop v Kinu Šiška",
+    description: "Akustični večer z gosti. Vstopnice kmalu v prodaji.",
+    type: "nastop",
+    upcoming: true,
+  },
+  {
+    date: "2026-02-10",
+    title: "Nova pesem na poti",
+    description: "Tretja avtorska pesem je v zaključni fazi snemanja. Kmalu več!",
+    type: "novica",
+  },
+  {
+    date: "2025-12-20",
+    title: "Božični koncert",
+    description: "Intimen akustični nastop v Cankarjevem domu. Hvala vsem, ki ste bili z nami.",
+    type: "nastop",
+  },
+  {
+    date: "2025-10-05",
+    title: "Izšel videospot Ne vid'm ure",
+    description: "Drugi avtorski videospot je ugledal luč sveta. Poglejte si ga v sekciji Videospoti!",
+    type: "novica",
+  },
+];
+
+function formatDate(dateStr: string): string {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("sl-SI", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+---
+
+<section id="novice" class="py-24 md:py-32 bg-surface">
+  <div class="max-w-4xl mx-auto px-6">
+    <!-- Naslov -->
+    <div class="text-center mb-16 fade-in">
+      <p class="text-accent tracking-[0.3em] uppercase text-sm mb-3 font-semibold">
+        Novice
+      </p>
+      <h2 class="reveal-text font-serif text-4xl md:text-5xl font-bold" data-reveal>
+        <span class="word"><span class="word-inner">Kaj</span></span>
+        <span class="word"><span class="word-inner" style="transition-delay: 0.1s">se</span></span>
+        <span class="word"><span class="word-inner" style="transition-delay: 0.2s">dogaja</span></span>
+      </h2>
+    </div>
+
+    <!-- Timeline -->
+    <div class="relative">
+      <!-- Vertikalna črta -->
+      <div class="absolute left-4 md:left-8 top-0 bottom-0 w-px bg-accent/20"></div>
+
+      <div class="space-y-10">
+        {
+          news.map((item) => (
+            <div class="fade-in relative pl-12 md:pl-20">
+              <!-- Pika na časovnici -->
+              <div
+                class={`absolute left-4 md:left-8 top-1 w-2.5 h-2.5 rounded-full -translate-x-1/2 ${
+                  item.upcoming
+                    ? "bg-accent shadow-[0_0_8px_rgba(200,149,60,0.5)]"
+                    : "bg-muted/50"
+                }`}
+              />
+
+              <div
+                class={`rounded-sm p-5 md:p-6 border ${
+                  item.upcoming
+                    ? "bg-accent/5 border-accent/30"
+                    : "bg-bg/50 border-text/5"
+                }`}
+              >
+                <!-- Datum + tip -->
+                <div class="flex flex-wrap items-center gap-3 mb-2">
+                  <time class="text-sm text-muted">{formatDate(item.date)}</time>
+                  <span
+                    class={`text-xs tracking-wider uppercase px-2 py-0.5 rounded-sm ${
+                      item.type === "nastop"
+                        ? "bg-primary/30 text-secondary"
+                        : "bg-accent/10 text-accent"
+                    }`}
+                  >
+                    {item.type}
+                  </span>
+                  {item.upcoming && (
+                    <span class="text-xs tracking-wider uppercase text-accent font-semibold">
+                      Prihajajoče
+                    </span>
+                  )}
+                </div>
+
+                <!-- Naslov + opis -->
+                <h3
+                  class={`font-serif text-xl md:text-2xl font-bold mb-2 ${
+                    item.upcoming ? "text-accent" : "text-text"
+                  }`}
+                >
+                  {item.title}
+                </h3>
+                <p class="text-muted leading-relaxed">{item.description}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
