@@ -118,7 +118,11 @@
 <script>
 const API_BASE = '/api';
 const CLOUDINARY_CLOUD = 'dewf3zos0';
-const CLOUDINARY_PRESET = 'kristjan_upload';
+const CLOUDINARY_PRESETS = {
+  gallery: 'kristjan_galerija',
+  news: 'kristjan_novice',
+  default: 'kristjan_galerija'
+};
 let token = sessionStorage.getItem('admin_token');
 let currentSection = 'hero';
 let sectionData = {};
@@ -185,7 +189,8 @@ function showToast(msg, type) {
 }
 
 // --- Cloudinary Upload ---
-function uploadImage(callback) {
+function uploadImage(callback, preset) {
+  var uploadPreset = preset || CLOUDINARY_PRESETS.default;
   const input = document.createElement('input');
   input.type = 'file';
   input.accept = 'image/*';
@@ -195,7 +200,7 @@ function uploadImage(callback) {
     if (file.size > 10 * 1024 * 1024) { showToast('Datoteka prevelika (max 10MB)', 'error'); return; }
     const fd = new FormData();
     fd.append('file', file);
-    fd.append('upload_preset', CLOUDINARY_PRESET);
+    fd.append('upload_preset', uploadPreset);
     try {
       showToast('Nalagam sliko...', 'success');
       const r = await fetch('https://api.cloudinary.com/v1_1/' + CLOUDINARY_CLOUD + '/image/upload', { method: 'POST', body: fd });
@@ -345,7 +350,7 @@ function uploadGalleryImage() {
   uploadImage(function(url) {
     sectionData['gallery'].images.push({src:url, alt:'Kristjan Hočevar nastop'});
     renderSection('gallery');
-  });
+  }, CLOUDINARY_PRESETS.gallery);
 }
 
 function renderNews(el, d) {
@@ -379,7 +384,7 @@ function uploadNewsThumb(i) {
   uploadImage(function(url) {
     var inp = document.querySelector('[data-news-thumb="' + i + '"]');
     if (inp) inp.value = url;
-  });
+  }, CLOUDINARY_PRESETS.news);
 }
 
 function renderContact(el, d) {
