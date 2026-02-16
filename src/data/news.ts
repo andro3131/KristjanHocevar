@@ -56,6 +56,19 @@ export const allNews: NewsItem[] = [
     type: "nastop",
   },
   {
+    id: "violina",
+    date: "2025-08-20",
+    title: "Včasih morata tud dva prijet za violino",
+    description: "Včasih morata tud dva prijet za violino.",
+    thumbnail:
+      "https://res.cloudinary.com/dewf3zos0/image/upload/w_400,h_250,c_fill,g_auto,q_auto,f_auto/v1771236870/535306998_18055190240570840_8429912899550077614_n_lyjkwi.jpg",
+    images: [
+      "https://res.cloudinary.com/dewf3zos0/image/upload/w_900,q_auto,f_auto/v1771236870/535306998_18055190240570840_8429912899550077614_n_lyjkwi.jpg",
+      "https://res.cloudinary.com/dewf3zos0/image/upload/w_900,q_auto,f_auto/v1771236870/535786481_18055190249570840_7274322420301118193_n_tgiezt.jpg",
+    ],
+    type: "novica",
+  },
+  {
     id: "snemanje-videospota",
     date: "2025-08-22",
     title: "Snemanje novega videospota",
