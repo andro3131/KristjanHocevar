@@ -152,9 +152,9 @@ import { allNews, formatDate } from "../data/news";
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
-          <div id="news-modal-hero" class="w-full rounded-t-sm overflow-hidden">
-            <div id="news-modal-image" class="w-full h-56 md:h-72 overflow-hidden">
-              <img src="" alt="" class="w-full h-full object-cover transition-opacity duration-300" />
+          <div id="news-modal-hero" class="w-full rounded-t-sm overflow-hidden bg-bg">
+            <div id="news-modal-image" class="w-full overflow-hidden">
+              <img src="" alt="" class="w-full max-h-[500px] object-contain transition-opacity duration-300" />
             </div>
             <div id="news-modal-youtube" class="w-full aspect-video hidden">
               <iframe
@@ -166,9 +166,9 @@ import { allNews, formatDate } from "../data/news";
                 allowfullscreen
               ></iframe>
             </div>
-            <div id="news-modal-video" class="w-full aspect-video hidden">
+            <div id="news-modal-video" class="w-full hidden">
               <video
-                class="w-full h-full object-cover"
+                class="w-full max-h-[500px] object-contain"
                 controls
                 playsinline
                 preload="metadata"
