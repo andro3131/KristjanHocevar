@@ -56,6 +56,21 @@ export const allNews: NewsItem[] = [
     type: "nastop",
   },
   {
+    id: "snemanje-videospota",
+    date: "2025-08-22",
+    title: "Snemanje novega videospota",
+    description:
+      "Pred kratkim smo snemali videospot za novo pesem. Nova pesem, kmalu...",
+    fullText:
+      "Pred kratkim smo snemali videospot za novo pesem in kmalu vam pokažem, kaj smo ustvarili. Nova pesem, kmalu...",
+    thumbnail:
+      "https://res.cloudinary.com/dewf3zos0/image/upload/w_400,h_250,c_fill,g_auto,q_auto,f_auto/v1771236353/538169364_18055416626570840_1165842393453746104_n_xkvnep.jpg",
+    images: [
+      "https://res.cloudinary.com/dewf3zos0/image/upload/w_900,q_auto,f_auto/v1771236353/538169364_18055416626570840_1165842393453746104_n_xkvnep.jpg",
+    ],
+    type: "novica",
+  },
+  {
     id: "videospot-ne-vidm-ure",
     date: "2025-10-05",
     title: "Izšel videospot Ne vid'm ure",
