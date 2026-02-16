@@ -25,12 +25,12 @@ const latestNews = allNews.slice(0, 5);
       <!-- Vertikalna črta - desktop sredina -->
       <div class="absolute left-1/2 top-0 bottom-0 w-px bg-accent/20 -translate-x-1/2 hidden md:block"></div>
 
-      <div class="space-y-10 md:space-y-16">
+      <div class="space-y-10 md:space-y-0">
         {
           latestNews.map((item, i) => {
             const isRight = i % 2 !== 0;
             return (
-              <div class="fade-in relative">
+              <div class={`fade-in relative ${i > 0 ? "md:-mt-36" : ""}`}>
                 <!-- Pika - mobilno -->
                 <div
                   class={`absolute left-4 top-1 w-2.5 h-2.5 rounded-full -translate-x-1/2 md:hidden ${
