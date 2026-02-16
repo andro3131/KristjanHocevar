@@ -1,0 +1,249 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { allNews, formatDate } from "../data/news";
+---
+
+<Layout title="Novice | Kristjan Hočevar" description="Vse novice in dogodki - Kristjan Hočevar, kantavtor.">
+  <!-- Navbar za podstran -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-bg/90 backdrop-blur-md shadow-lg transition-all duration-300">
+    <div class="max-w-none mx-0 px-6 md:px-16 lg:px-24 py-4 flex items-center justify-between">
+      <a href="/" class="block hover:opacity-80 transition-opacity">
+        <img
+          src="https://res.cloudinary.com/dewf3zos0/image/upload/w_400,q_auto,f_auto/v1771235412/logo-KH2_cilrlb.png"
+          alt="Kristjan Hočevar"
+          class="h-12 md:h-14 w-auto"
+        />
+      </a>
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 text-sm tracking-widest uppercase text-text/80 hover:text-accent transition-colors"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        Nazaj
+      </a>
+    </div>
+  </nav>
+
+  <main class="pt-28 pb-24">
+    <div class="max-w-4xl mx-auto px-6">
+      <!-- Naslov -->
+      <div class="text-center mb-16 fade-in">
+        <p class="text-accent tracking-[0.3em] uppercase text-sm mb-3 font-semibold">
+          Novice
+        </p>
+        <h1 class="reveal-text font-serif text-4xl md:text-5xl font-bold" data-reveal>
+          <span class="word"><span class="word-inner">Vse</span></span>
+          <span class="word"><span class="word-inner" style="transition-delay: 0.1s">novice</span></span>
+          <span class="word"><span class="word-inner" style="transition-delay: 0.2s">in</span></span>
+          <span class="word"><span class="word-inner" style="transition-delay: 0.3s">dogodki</span></span>
+        </h1>
+      </div>
+
+      <!-- Timeline -->
+      <div class="relative">
+        <!-- Vertikalna črta -->
+        <div class="absolute left-4 md:left-8 top-0 bottom-0 w-px bg-accent/20"></div>
+
+        <div class="space-y-10">
+          {
+            allNews.map((item) => (
+              <div class="fade-in relative pl-12 md:pl-20">
+                <!-- Pika na časovnici -->
+                <div
+                  class={`absolute left-4 md:left-8 top-1 w-2.5 h-2.5 rounded-full -translate-x-1/2 ${
+                    item.upcoming
+                      ? "bg-accent shadow-[0_0_8px_rgba(200,149,60,0.5)]"
+                      : "bg-muted/50"
+                  }`}
+                />
+
+                <div
+                  class={`news-card group rounded-sm border cursor-pointer transition-colors duration-300 ${
+                    item.upcoming
+                      ? "bg-accent/5 border-accent/30 hover:border-accent/50"
+                      : "bg-bg/50 border-text/5 hover:border-text/15"
+                  }`}
+                  data-news-trigger
+                  data-news-id={item.id}
+                >
+                  <div class="flex gap-4 md:gap-6 p-4 md:p-5">
+                    <!-- Thumbnail -->
+                    <div class="shrink-0 w-20 h-20 md:w-28 md:h-20 rounded-sm overflow-hidden">
+                      <img
+                        src={item.thumbnail}
+                        alt={item.title}
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    </div>
+
+                    <!-- Vsebina -->
+                    <div class="flex-1 min-w-0">
+                      <div class="flex flex-wrap items-center gap-2 mb-1">
+                        <time class="text-xs text-muted">{formatDate(item.date)}</time>
+                        <span
+                          class={`text-xs tracking-wider uppercase px-1.5 py-0.5 rounded-sm ${
+                            item.type === "nastop"
+                              ? "bg-primary/30 text-secondary"
+                              : "bg-accent/10 text-accent"
+                          }`}
+                        >
+                          {item.type}
+                        </span>
+                        {item.upcoming && (
+                          <span class="text-xs tracking-wider uppercase text-accent font-semibold">
+                            Prihajajoče
+                          </span>
+                        )}
+                      </div>
+                      <h3
+                        class={`font-serif text-lg md:text-xl font-bold ${
+                          item.upcoming ? "text-accent" : "text-text"
+                        }`}
+                      >
+                        {item.title}
+                      </h3>
+                      <p class="text-muted text-sm mt-1 line-clamp-2">{item.description}</p>
+                    </div>
+
+                    <!-- Puščica -->
+                    <div class="shrink-0 flex items-center">
+                      <svg
+                        class="w-5 h-5 text-muted/50 transition-transform duration-300 group-hover:translate-x-1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal -->
+  <div
+    id="news-modal"
+    class="fixed inset-0 z-[100] pointer-events-none opacity-0 transition-opacity duration-300"
+  >
+    <div id="news-modal-backdrop" class="absolute inset-0 bg-bg/90 backdrop-blur-sm"></div>
+    <div class="absolute inset-0 overflow-y-auto">
+      <div class="min-h-full flex items-start justify-center py-12 px-4 md:px-8">
+        <div
+          id="news-modal-content"
+          class="relative w-full max-w-2xl bg-surface border border-text/10 rounded-sm shadow-2xl transform translate-y-8 transition-transform duration-300"
+        >
+          <button
+            id="news-modal-close"
+            class="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-bg/50 text-text/70 hover:text-text hover:bg-bg/80 transition-colors"
+            aria-label="Zapri"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <div id="news-modal-image" class="w-full h-56 md:h-72 overflow-hidden rounded-t-sm">
+            <img src="" alt="" class="w-full h-full object-cover" />
+          </div>
+          <div class="p-6 md:p-8">
+            <div class="flex flex-wrap items-center gap-2 mb-3">
+              <time id="news-modal-date" class="text-sm text-muted"></time>
+              <span id="news-modal-type" class="text-xs tracking-wider uppercase px-2 py-0.5 rounded-sm"></span>
+            </div>
+            <h3 id="news-modal-title" class="font-serif text-2xl md:text-3xl font-bold mb-4"></h3>
+            <p id="news-modal-text" class="text-muted leading-relaxed"></p>
+            <div id="news-modal-gallery" class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 hidden"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import { allNews, formatDate } from "../data/news";
+
+    const modal = document.getElementById("news-modal")!;
+    const modalBackdrop = document.getElementById("news-modal-backdrop")!;
+    const modalContent = document.getElementById("news-modal-content")!;
+    const modalClose = document.getElementById("news-modal-close")!;
+    const modalImage = document.querySelector("#news-modal-image img") as HTMLImageElement;
+    const modalDate = document.getElementById("news-modal-date")!;
+    const modalType = document.getElementById("news-modal-type")!;
+    const modalTitle = document.getElementById("news-modal-title")!;
+    const modalText = document.getElementById("news-modal-text")!;
+    const modalGallery = document.getElementById("news-modal-gallery")!;
+
+    function openModal(newsId: string) {
+      const item = allNews.find((n) => n.id === newsId);
+      if (!item) return;
+
+      modalImage.src = item.images?.[0] || item.thumbnail;
+      modalImage.alt = item.title;
+      modalDate.textContent = formatDate(item.date);
+      modalTitle.textContent = item.title;
+      modalText.textContent = item.fullText || item.description;
+
+      modalType.textContent = item.type;
+      modalType.className = `text-xs tracking-wider uppercase px-2 py-0.5 rounded-sm ${
+        item.type === "nastop"
+          ? "bg-primary/30 text-secondary"
+          : "bg-accent/10 text-accent"
+      }`;
+
+      if (item.images && item.images.length > 1) {
+        modalGallery.innerHTML = item.images
+          .slice(1)
+          .map(
+            (img) =>
+              `<div class="rounded-sm overflow-hidden"><img src="${img}" alt="${item.title}" class="w-full h-48 object-cover" loading="lazy" /></div>`
+          )
+          .join("");
+        modalGallery.classList.remove("hidden");
+      } else {
+        modalGallery.innerHTML = "";
+        modalGallery.classList.add("hidden");
+      }
+
+      modal.classList.remove("pointer-events-none", "opacity-0");
+      modal.classList.add("pointer-events-auto", "opacity-100");
+      modalContent.classList.remove("translate-y-8");
+      modalContent.classList.add("translate-y-0");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+      modal.classList.add("opacity-0");
+      modal.classList.remove("opacity-100");
+      modalContent.classList.add("translate-y-8");
+      modalContent.classList.remove("translate-y-0");
+      document.body.style.overflow = "";
+      setTimeout(() => {
+        modal.classList.add("pointer-events-none");
+        modal.classList.remove("pointer-events-auto");
+      }, 300);
+    }
+
+    document.querySelectorAll("[data-news-trigger]").forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const id = (trigger as HTMLElement).dataset.newsId;
+        if (id) openModal(id);
+      });
+    });
+
+    modalClose.addEventListener("click", closeModal);
+    modalBackdrop.addEventListener("click", closeModal);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeModal();
+    });
+  </script>
+</Layout>
