@@ -152,8 +152,20 @@ import { allNews, formatDate } from "../data/news";
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
-          <div id="news-modal-image" class="w-full h-56 md:h-72 overflow-hidden rounded-t-sm">
-            <img src="" alt="" class="w-full h-full object-cover" />
+          <div id="news-modal-hero" class="w-full rounded-t-sm overflow-hidden">
+            <div id="news-modal-image" class="w-full h-56 md:h-72 overflow-hidden">
+              <img src="" alt="" class="w-full h-full object-cover transition-opacity duration-300" />
+            </div>
+            <div id="news-modal-youtube" class="w-full aspect-video hidden">
+              <iframe
+                class="w-full h-full"
+                src=""
+                title=""
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
           </div>
           <div class="p-6 md:p-8">
             <div class="flex flex-wrap items-center gap-2 mb-3">
@@ -176,7 +188,10 @@ import { allNews, formatDate } from "../data/news";
     const modalBackdrop = document.getElementById("news-modal-backdrop")!;
     const modalContent = document.getElementById("news-modal-content")!;
     const modalClose = document.getElementById("news-modal-close")!;
-    const modalImage = document.querySelector("#news-modal-image img") as HTMLImageElement;
+    const modalImageWrap = document.getElementById("news-modal-image")!;
+    const modalImage = modalImageWrap.querySelector("img") as HTMLImageElement;
+    const modalYoutubeWrap = document.getElementById("news-modal-youtube")!;
+    const modalYoutubeIframe = modalYoutubeWrap.querySelector("iframe") as HTMLIFrameElement;
     const modalDate = document.getElementById("news-modal-date")!;
     const modalType = document.getElementById("news-modal-type")!;
     const modalTitle = document.getElementById("news-modal-title")!;
@@ -187,8 +202,19 @@ import { allNews, formatDate } from "../data/news";
       const item = allNews.find((n) => n.id === newsId);
       if (!item) return;
 
-      modalImage.src = item.images?.[0] || item.thumbnail;
-      modalImage.alt = item.title;
+      if (item.youtube) {
+        modalImageWrap.classList.add("hidden");
+        modalYoutubeWrap.classList.remove("hidden");
+        modalYoutubeIframe.src = `https://www.youtube-nocookie.com/embed/${item.youtube}`;
+        modalYoutubeIframe.title = item.title;
+      } else {
+        modalYoutubeWrap.classList.add("hidden");
+        modalYoutubeIframe.src = "";
+        modalImageWrap.classList.remove("hidden");
+        modalImage.src = item.images?.[0] || item.thumbnail;
+        modalImage.alt = item.title;
+      }
+
       modalDate.textContent = formatDate(item.date);
       modalTitle.textContent = item.title;
       modalText.textContent = item.fullText || item.description;
@@ -202,13 +228,26 @@ import { allNews, formatDate } from "../data/news";
 
       if (item.images && item.images.length > 1) {
         modalGallery.innerHTML = item.images
-          .slice(1)
           .map(
-            (img) =>
-              `<div class="rounded-sm overflow-hidden"><img src="${img}" alt="${item.title}" class="w-full h-48 object-cover" loading="lazy" /></div>`
+            (img, i) =>
+              `<div class="rounded-sm overflow-hidden cursor-pointer group/img" data-gallery-img="${img}">
+                <img src="${img}" alt="${item.title}" class="w-full h-48 object-cover transition-all duration-300 group-hover/img:scale-105 group-hover/img:brightness-110 ${i === 0 ? 'ring-2 ring-accent' : ''}" loading="lazy" />
+              </div>`
           )
           .join("");
         modalGallery.classList.remove("hidden");
+
+        modalGallery.querySelectorAll("[data-gallery-img]").forEach((el) => {
+          el.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const src = (el as HTMLElement).dataset.galleryImg!;
+            modalImage.src = src;
+            modalGallery.querySelectorAll("img").forEach((img) => {
+              img.classList.remove("ring-2", "ring-accent");
+            });
+            (el.querySelector("img") as HTMLElement).classList.add("ring-2", "ring-accent");
+          });
+        });
       } else {
         modalGallery.innerHTML = "";
         modalGallery.classList.add("hidden");
@@ -227,6 +266,7 @@ import { allNews, formatDate } from "../data/news";
       modalContent.classList.add("translate-y-8");
       modalContent.classList.remove("translate-y-0");
       document.body.style.overflow = "";
+      modalYoutubeIframe.src = "";
       setTimeout(() => {
         modal.classList.add("pointer-events-none");
         modal.classList.remove("pointer-events-auto");
