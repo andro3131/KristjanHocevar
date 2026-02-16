@@ -3,6 +3,9 @@ interface NewsItem {
   date: string;
   title: string;
   description: string;
+  fullText?: string;
+  thumbnail: string;
+  images?: string[];
   type: "nastop" | "novica";
   upcoming?: boolean;
 }
@@ -12,25 +15,37 @@ const news: NewsItem[] = [
     date: "2026-03-15",
     title: "Nastop v Kinu Šiška",
     description: "Akustični večer z gosti. Vstopnice kmalu v prodaji.",
+    fullText: "Vabljeni na poseben akustični večer v Kinu Šiška, kjer bom prvič nastopil s celotnim repertoarjem avtorskih pesmi. Na odru se mi bodo pridružili posebni gostje. Večer obljublja intimno atmosfero, kakršno poznamo iz najboljših singer-songwriter koncertov. Vstopnice bodo kmalu na voljo!",
+    thumbnail: "https://res.cloudinary.com/dewf3zos0/image/upload/w_400,h_250,c_fill,g_auto,q_auto,f_auto/v1771190903/Screenshot_2026-02-15_at_21.49_copy_z3lroc.jpg",
     type: "nastop",
     upcoming: true,
   },
   {
     date: "2026-02-10",
     title: "Nova pesem na poti",
-    description: "Tretja avtorska pesem je v zaključni fazi snemanja. Kmalu več!",
+    description: "Tretja avtorska pesem je v zaključni fazi snemanja.",
+    fullText: "Tretja avtorska pesem je v zaključni fazi snemanja in miksanja. Pesem prinaša novo poglavje v moji glasbeni zgodbi -- bolj zrel zvok, a še vedno zvest akustičnim koreninam. Komaj čakam, da jo delim z vami!",
+    thumbnail: "https://res.cloudinary.com/dewf3zos0/image/upload/w_400,h_250,c_fill,g_auto,q_auto,f_auto/v1771190900/Screenshot_2026-02-15_at_22.10_copy_pp9xdw.jpg",
     type: "novica",
   },
   {
     date: "2025-12-20",
     title: "Božični koncert",
-    description: "Intimen akustični nastop v Cankarjevem domu. Hvala vsem, ki ste bili z nami.",
+    description: "Intimen akustični nastop v Cankarjevem domu.",
+    fullText: "Hvala vsem, ki ste bili z nami na božičnem koncertu v Cankarjevem domu. Bil je čaroben večer poln toplih melodij in skupnih trenutkov. Energija občinstva je bila nepozabna.",
+    thumbnail: "https://res.cloudinary.com/dewf3zos0/image/upload/w_400,h_250,c_fill,g_auto,q_auto,f_auto/v1771190895/Screenshot_2026-02-15_at_21.50_copy_kzoc8n.jpg",
+    images: [
+      "https://res.cloudinary.com/dewf3zos0/image/upload/w_600,q_auto,f_auto/v1771190891/Screenshot_2026-02-15_at_21.52_copy_tnadik.jpg",
+      "https://res.cloudinary.com/dewf3zos0/image/upload/w_600,q_auto,f_auto/v1771190889/Screenshot_2026-02-15_at_21.50_copy2_qks0df.jpg",
+    ],
     type: "nastop",
   },
   {
     date: "2025-10-05",
     title: "Izšel videospot Ne vid'm ure",
-    description: "Drugi avtorski videospot je ugledal luč sveta. Poglejte si ga v sekciji Videospoti!",
+    description: "Drugi avtorski videospot je ugledal luč sveta.",
+    fullText: "Ponosen sem, da lahko z vami delim svoj drugi avtorski videospot za pesem Ne vid'm ure. Posnetek je nastal v čudoviti naravni kulisi, ki popolnoma ujame vzdušje pesmi. Poglejte si ga v sekciji Videospoti!",
+    thumbnail: "https://res.cloudinary.com/dewf3zos0/image/upload/w_400,h_250,c_fill,g_auto,q_auto,f_auto/v1771190897/Screenshot_2026-02-15_at_21.52_copy3_e2ff8v.jpg",
     type: "novica",
   },
 ];
@@ -66,7 +81,7 @@ function formatDate(dateStr: string): string {
 
       <div class="space-y-10">
         {
-          news.map((item) => (
+          news.map((item, index) => (
             <div class="fade-in relative pl-12 md:pl-20">
               <!-- Pika na časovnici -->
               <div
@@ -78,40 +93,93 @@ function formatDate(dateStr: string): string {
               />
 
               <div
-                class={`rounded-sm p-5 md:p-6 border ${
+                class={`news-card group rounded-sm border cursor-pointer transition-colors duration-300 ${
                   item.upcoming
-                    ? "bg-accent/5 border-accent/30"
-                    : "bg-bg/50 border-text/5"
+                    ? "bg-accent/5 border-accent/30 hover:border-accent/50"
+                    : "bg-bg/50 border-text/5 hover:border-text/15"
                 }`}
+                data-news-card
               >
-                <!-- Datum + tip -->
-                <div class="flex flex-wrap items-center gap-3 mb-2">
-                  <time class="text-sm text-muted">{formatDate(item.date)}</time>
-                  <span
-                    class={`text-xs tracking-wider uppercase px-2 py-0.5 rounded-sm ${
-                      item.type === "nastop"
-                        ? "bg-primary/30 text-secondary"
-                        : "bg-accent/10 text-accent"
-                    }`}
-                  >
-                    {item.type}
-                  </span>
-                  {item.upcoming && (
-                    <span class="text-xs tracking-wider uppercase text-accent font-semibold">
-                      Prihajajoče
-                    </span>
-                  )}
+                <!-- Zaprt pogled: thumbnail + kratek opis -->
+                <div class="flex gap-4 md:gap-6 p-4 md:p-5">
+                  <!-- Thumbnail -->
+                  <div class="shrink-0 w-20 h-20 md:w-28 md:h-20 rounded-sm overflow-hidden">
+                    <img
+                      src={item.thumbnail}
+                      alt={item.title}
+                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <!-- Vsebina -->
+                  <div class="flex-1 min-w-0">
+                    <div class="flex flex-wrap items-center gap-2 mb-1">
+                      <time class="text-xs text-muted">{formatDate(item.date)}</time>
+                      <span
+                        class={`text-xs tracking-wider uppercase px-1.5 py-0.5 rounded-sm ${
+                          item.type === "nastop"
+                            ? "bg-primary/30 text-secondary"
+                            : "bg-accent/10 text-accent"
+                        }`}
+                      >
+                        {item.type}
+                      </span>
+                      {item.upcoming && (
+                        <span class="text-xs tracking-wider uppercase text-accent font-semibold">
+                          Prihajajoče
+                        </span>
+                      )}
+                    </div>
+                    <h3
+                      class={`font-serif text-lg md:text-xl font-bold ${
+                        item.upcoming ? "text-accent" : "text-text"
+                      }`}
+                    >
+                      {item.title}
+                    </h3>
+                    <p class="text-muted text-sm mt-1 line-clamp-1">{item.description}</p>
+                  </div>
+
+                  <!-- Puščica -->
+                  <div class="shrink-0 flex items-center">
+                    <svg
+                      class="news-arrow w-5 h-5 text-muted/50 transition-transform duration-300"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
                 </div>
 
-                <!-- Naslov + opis -->
-                <h3
-                  class={`font-serif text-xl md:text-2xl font-bold mb-2 ${
-                    item.upcoming ? "text-accent" : "text-text"
-                  }`}
-                >
-                  {item.title}
-                </h3>
-                <p class="text-muted leading-relaxed">{item.description}</p>
+                <!-- Razširjena vsebina -->
+                <div class="news-expand overflow-hidden" style="max-height: 0; opacity: 0; transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;">
+                  <div class="px-4 md:px-5 pb-5 pt-0">
+                    <div class="border-t border-text/10 pt-4">
+                      {item.fullText && (
+                        <p class="text-muted leading-relaxed mb-4">{item.fullText}</p>
+                      )}
+                      {item.images && item.images.length > 0 && (
+                        <div class="grid grid-cols-2 gap-3">
+                          {item.images.map((img) => (
+                            <div class="rounded-sm overflow-hidden">
+                              <img
+                                src={img}
+                                alt={item.title}
+                                class="w-full h-40 object-cover"
+                                loading="lazy"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           ))
@@ -120,3 +188,38 @@ function formatDate(dateStr: string): string {
     </div>
   </div>
 </section>
+
+<script>
+  document.querySelectorAll("[data-news-card]").forEach((card) => {
+    card.addEventListener("click", () => {
+      const expand = card.querySelector(".news-expand") as HTMLElement;
+      const arrow = card.querySelector(".news-arrow") as HTMLElement;
+      if (!expand) return;
+
+      const isOpen = expand.style.maxHeight !== "0px" && expand.style.maxHeight !== "";
+
+      // Zapri vse ostale
+      document.querySelectorAll("[data-news-card]").forEach((other) => {
+        if (other !== card) {
+          const otherExpand = other.querySelector(".news-expand") as HTMLElement;
+          const otherArrow = other.querySelector(".news-arrow") as HTMLElement;
+          if (otherExpand) {
+            otherExpand.style.maxHeight = "0px";
+            otherExpand.style.opacity = "0";
+          }
+          if (otherArrow) otherArrow.style.transform = "rotate(0deg)";
+        }
+      });
+
+      if (isOpen) {
+        expand.style.maxHeight = "0px";
+        expand.style.opacity = "0";
+        arrow.style.transform = "rotate(0deg)";
+      } else {
+        expand.style.maxHeight = expand.scrollHeight + "px";
+        expand.style.opacity = "1";
+        arrow.style.transform = "rotate(180deg)";
+      }
+    });
+  });
+</script>
