@@ -30,7 +30,7 @@ const latestNews = allNews.slice(0, 5);
           latestNews.map((item, i) => {
             const isRight = i % 2 !== 0;
             return (
-              <div class={`fade-in relative ${i > 0 ? "md:-mt-36" : ""}`}>
+              <div class={`fade-in relative ${i > 0 ? "md:-mt-28" : ""}`}>
                 <!-- Pika - mobilno -->
                 <div
                   class={`absolute left-4 top-1 w-2.5 h-2.5 rounded-full -translate-x-1/2 md:hidden ${
@@ -49,7 +49,7 @@ const latestNews = allNews.slice(0, 5);
                 />
 
                 <!-- Kartica -->
-                <div class={`pl-12 md:pl-0 md:w-[calc(50%-1.5rem)] ${isRight ? "md:ml-auto" : ""}`}>
+                <div class={`pl-12 md:pl-0 md:w-[calc(40%-1rem)] ${isRight ? "md:ml-auto" : ""}`}>
                   <div
                     class={`news-card group rounded-sm border cursor-pointer transition-all duration-300 overflow-hidden ${
                       item.upcoming
