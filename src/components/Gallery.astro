@@ -18,24 +18,24 @@ const displayImages = gallery.images.slice(0, 6);
       </h2>
     </div>
 
-    <!-- Masonry-like grid s staggered entrance -->
-    <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+    <!-- Grid -->
+    <div class="grid grid-cols-2 lg:grid-cols-3 gap-3">
       {
         displayImages.map((image, i) => (
           <div
-            class="stagger-item break-inside-avoid"
+            class="stagger-item"
             data-stagger
             style={`transition-delay: ${i * 0.12}s`}
           >
             <div
-              class="group relative overflow-hidden rounded-sm cursor-pointer"
+              class="group relative overflow-hidden rounded-sm cursor-pointer aspect-[4/3]"
               data-gallery-open
               data-gallery-index={i}
             >
               <img
                 src={image.src}
                 alt={image.alt}
-                class="w-full block transition-transform duration-700 group-hover:scale-105"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 loading="lazy"
               />
               <div class="absolute inset-0 bg-bg/0 group-hover:bg-bg/20 transition-colors duration-500" />
