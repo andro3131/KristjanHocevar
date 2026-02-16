@@ -1,6 +1,8 @@
 ---
-const heroImage =
-  "https://res.cloudinary.com/dewf3zos0/image/upload/w_1920,q_auto,f_auto/v1771190911/565304430_25379658718308632_6215203515395913864_n_1_hper69.jpg";
+import { loadContent } from "../utils/content";
+import type { HeroContent } from "../types/content";
+
+const hero = loadContent<HeroContent>("hero");
 ---
 
 <section id="hero" class="relative min-h-screen flex items-center overflow-hidden">
@@ -8,8 +10,8 @@ const heroImage =
   <div class="absolute inset-0">
     <img
       id="hero-parallax"
-      src={heroImage}
-      alt="Kristjan Hočevar igra kitaro v gozdu"
+      src={hero.image}
+      alt={hero.imageAlt}
       class="hero-zoom w-full h-[120%] object-cover object-[57%_center] md:object-center will-change-transform"
       loading="eager"
     />
@@ -21,26 +23,25 @@ const heroImage =
   <!-- Vsebina - levo poravnano -->
   <div class="relative z-10 text-left px-6 md:px-16 lg:px-24 mt-20 max-w-3xl">
     <h1 class="hero-float font-serif text-6xl md:text-8xl lg:text-9xl font-bold mb-4 tracking-tight">
-      <span class="hero-word inline-block">Kristjan</span>
+      <span class="hero-word inline-block">{hero.title}</span>
       <br />
-      <span class="hero-word inline-block text-accent" style="animation-delay: 0.15s">Hočevar</span>
+      <span class="hero-word inline-block text-accent" style="animation-delay: 0.15s">{hero.subtitle}</span>
     </h1>
     <p class="hero-word text-lg md:text-xl text-muted tracking-[0.3em] uppercase mb-10" style="animation-delay: 0.3s">
-      kantavtor
+      {hero.tagline}
     </p>
     <div class="hero-word flex flex-col sm:flex-row items-start gap-4" style="animation-delay: 0.45s">
-      <a
-        href="#videospoti"
-        class="btn-fill-reverse px-8 py-3 bg-accent text-bg font-semibold tracking-wider uppercase text-sm rounded-sm"
-      >
-        Poslušaj
-      </a>
-      <a
-        href="#kontakt"
-        class="btn-fill px-8 py-3 border border-text/30 text-text font-semibold tracking-wider uppercase text-sm rounded-sm"
-      >
-        Kontakt
-      </a>
+      {hero.buttons.map((btn) => (
+        <a
+          href={btn.link}
+          class={btn.style === "primary"
+            ? "btn-fill-reverse px-8 py-3 bg-accent text-bg font-semibold tracking-wider uppercase text-sm rounded-sm"
+            : "btn-fill px-8 py-3 border border-text/30 text-text font-semibold tracking-wider uppercase text-sm rounded-sm"
+          }
+        >
+          {btn.text}
+        </a>
+      ))}
     </div>
   </div>
 

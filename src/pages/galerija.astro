@@ -1,6 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { allImages } from "../data/gallery";
+import { loadContent } from "../utils/content";
+import type { GalleryContent } from "../types/content";
+
+const gallery = loadContent<GalleryContent>("gallery");
+const allImages = gallery.images;
 ---
 
 <Layout title="Galerija | Kristjan Hočevar" description="Galerija fotografij - Kristjan Hočevar, kantavtor.">

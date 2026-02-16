@@ -1,0 +1,19 @@
+{
+  "title": "Kristjan",
+  "subtitle": "Hočevar",
+  "tagline": "kantavtor",
+  "image": "https://res.cloudinary.com/dewf3zos0/image/upload/w_1920,q_auto,f_auto/v1771190911/565304430_25379658718308632_6215203515395913864_n_1_hper69.jpg",
+  "imageAlt": "Kristjan Hočevar igra kitaro v gozdu",
+  "buttons": [
+    {
+      "text": "Poslušaj",
+      "link": "#videospoti",
+      "style": "primary"
+    },
+    {
+      "text": "Kontakt",
+      "link": "#kontakt",
+      "style": "secondary"
+    }
+  ]
+}

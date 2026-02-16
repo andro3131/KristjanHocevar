@@ -1,7 +1,9 @@
 ---
-import { allImages } from "../data/gallery";
+import { loadContent } from "../utils/content";
+import type { GalleryContent } from "../types/content";
 
-const displayImages = allImages.slice(0, 6);
+const gallery = loadContent<GalleryContent>("gallery");
+const displayImages = gallery.images.slice(0, 6);
 ---
 
 <section id="galerija" class="py-24 md:py-32">
@@ -44,7 +46,7 @@ const displayImages = allImages.slice(0, 6);
     </div>
 
     <!-- Poglej več -->
-    {allImages.length > 6 && (
+    {gallery.images.length > 6 && (
       <div class="text-center mt-12 fade-in">
         <a
           href="/galerija"

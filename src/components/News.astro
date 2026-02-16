@@ -1,7 +1,10 @@
 ---
-import { allNews, formatDate } from "../data/news";
+import { loadContent, formatDate } from "../utils/content";
+import type { NewsContent } from "../types/content";
 
-const latestNews = allNews.slice(0, 5);
+const news = loadContent<NewsContent>("news");
+const allNewsItems = news.items;
+const latestNews = allNewsItems.slice(0, 5);
 ---
 
 <section id="novice" class="py-24 md:py-32 bg-surface">
@@ -105,7 +108,7 @@ const latestNews = allNews.slice(0, 5);
     </div>
 
     <!-- Poglej vse -->
-    {allNews.length > 5 && (
+    {allNewsItems.length > 5 && (
       <div class="text-center mt-12 fade-in">
         <a
           href="/novice"
@@ -133,17 +136,13 @@ const latestNews = allNews.slice(0, 5);
   id="news-modal"
   class="fixed inset-0 z-[100] pointer-events-none opacity-0 transition-opacity duration-300"
 >
-  <!-- Ozadje -->
   <div id="news-modal-backdrop" class="absolute inset-0 bg-bg/90 backdrop-blur-sm"></div>
-
-  <!-- Vsebina -->
   <div class="absolute inset-0 overflow-y-auto">
     <div class="min-h-full flex items-start justify-center py-12 px-4 md:px-8">
       <div
         id="news-modal-content"
         class="relative w-full max-w-2xl bg-surface border border-text/10 rounded-sm shadow-2xl transform translate-y-8 transition-transform duration-300"
       >
-        <!-- Zapri gumb -->
         <button
           id="news-modal-close"
           class="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-bg/50 text-text/70 hover:text-text hover:bg-bg/80 transition-colors"
@@ -153,35 +152,19 @@ const latestNews = allNews.slice(0, 5);
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
-
-        <!-- Slika ali YouTube -->
         <div id="news-modal-hero" class="w-full rounded-t-sm overflow-hidden bg-bg">
           <div id="news-modal-image" class="w-full overflow-hidden">
             <img src="" alt="" class="w-full max-h-[500px] object-contain transition-opacity duration-300" />
           </div>
           <div id="news-modal-youtube" class="w-full aspect-video hidden">
-            <iframe
-              class="w-full h-full"
-              src=""
-              title=""
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            ></iframe>
+            <iframe class="w-full h-full" src="" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
           <div id="news-modal-video" class="w-full hidden">
-            <video
-              class="w-full max-h-[500px] object-contain"
-              controls
-              playsinline
-              preload="metadata"
-            >
+            <video class="w-full max-h-[500px] object-contain" controls playsinline preload="metadata">
               <source src="" type="video/mp4" />
             </video>
           </div>
         </div>
-
-        <!-- Besedilo -->
         <div class="p-6 md:p-8">
           <div class="flex flex-wrap items-center gap-2 mb-3">
             <time id="news-modal-date" class="text-sm text-muted"></time>
@@ -189,41 +172,40 @@ const latestNews = allNews.slice(0, 5);
           </div>
           <h3 id="news-modal-title" class="font-serif text-2xl md:text-3xl font-bold mb-4"></h3>
           <p id="news-modal-text" class="text-muted leading-relaxed"></p>
-
-          <!-- Galerija slik -->
-          <div id="news-modal-gallery" class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 hidden">
-          </div>
+          <div id="news-modal-gallery" class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 hidden"></div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<script>
-  import { allNews, formatDate } from "../data/news";
+<script define:vars={{ newsItems: allNewsItems }}>
+  function fmtDate(dateStr) {
+    var d = new Date(dateStr);
+    return d.toLocaleDateString("sl-SI", { day: "numeric", month: "long", year: "numeric" });
+  }
 
-  const modal = document.getElementById("news-modal")!;
-  const modalBackdrop = document.getElementById("news-modal-backdrop")!;
-  const modalContent = document.getElementById("news-modal-content")!;
-  const modalClose = document.getElementById("news-modal-close")!;
-  const modalImageWrap = document.getElementById("news-modal-image")!;
-  const modalImage = modalImageWrap.querySelector("img") as HTMLImageElement;
-  const modalYoutubeWrap = document.getElementById("news-modal-youtube")!;
-  const modalYoutubeIframe = modalYoutubeWrap.querySelector("iframe") as HTMLIFrameElement;
-  const modalVideoWrap = document.getElementById("news-modal-video")!;
-  const modalVideo = modalVideoWrap.querySelector("video") as HTMLVideoElement;
-  const modalVideoSource = modalVideo.querySelector("source") as HTMLSourceElement;
-  const modalDate = document.getElementById("news-modal-date")!;
-  const modalType = document.getElementById("news-modal-type")!;
-  const modalTitle = document.getElementById("news-modal-title")!;
-  const modalText = document.getElementById("news-modal-text")!;
-  const modalGallery = document.getElementById("news-modal-gallery")!;
+  var modal = document.getElementById("news-modal");
+  var modalBackdrop = document.getElementById("news-modal-backdrop");
+  var modalContent = document.getElementById("news-modal-content");
+  var modalClose = document.getElementById("news-modal-close");
+  var modalImageWrap = document.getElementById("news-modal-image");
+  var modalImage = modalImageWrap.querySelector("img");
+  var modalYoutubeWrap = document.getElementById("news-modal-youtube");
+  var modalYoutubeIframe = modalYoutubeWrap.querySelector("iframe");
+  var modalVideoWrap = document.getElementById("news-modal-video");
+  var modalVideo = modalVideoWrap.querySelector("video");
+  var modalVideoSource = modalVideo.querySelector("source");
+  var modalDate = document.getElementById("news-modal-date");
+  var modalType = document.getElementById("news-modal-type");
+  var modalTitle = document.getElementById("news-modal-title");
+  var modalText = document.getElementById("news-modal-text");
+  var modalGallery = document.getElementById("news-modal-gallery");
 
-  function openModal(newsId: string) {
-    const item = allNews.find((n) => n.id === newsId);
+  function openModal(newsId) {
+    var item = newsItems.find(function(n) { return n.id === newsId; });
     if (!item) return;
 
-    // Skrij vse hero elemente
     modalImageWrap.classList.add("hidden");
     modalYoutubeWrap.classList.add("hidden");
     modalVideoWrap.classList.add("hidden");
@@ -233,7 +215,7 @@ const latestNews = allNews.slice(0, 5);
 
     if (item.youtube) {
       modalYoutubeWrap.classList.remove("hidden");
-      modalYoutubeIframe.src = `https://www.youtube-nocookie.com/embed/${item.youtube}`;
+      modalYoutubeIframe.src = "https://www.youtube-nocookie.com/embed/" + item.youtube;
       modalYoutubeIframe.title = item.title;
     } else if (item.video) {
       modalVideoWrap.classList.remove("hidden");
@@ -241,45 +223,34 @@ const latestNews = allNews.slice(0, 5);
       modalVideo.load();
     } else {
       modalImageWrap.classList.remove("hidden");
-      modalImage.src = item.images?.[0] || item.thumbnail;
+      modalImage.src = (item.images && item.images[0]) || item.thumbnail;
       modalImage.alt = item.title;
     }
 
-    modalDate.textContent = formatDate(item.date);
+    modalDate.textContent = fmtDate(item.date);
     modalTitle.textContent = item.title;
     modalText.textContent = item.fullText || item.description;
 
-    // Tip badge
     modalType.textContent = item.type;
-    modalType.className = `text-xs tracking-wider uppercase px-2 py-0.5 rounded-sm ${
-      item.type === "nastop"
-        ? "bg-primary/30 text-secondary"
-        : "bg-accent/10 text-accent"
-    }`;
+    modalType.className = "text-xs tracking-wider uppercase px-2 py-0.5 rounded-sm " +
+      (item.type === "nastop" ? "bg-primary/30 text-secondary" : "bg-accent/10 text-accent");
 
-    // Galerija - vse slike kot klikljivi thumbnailsi
     if (item.images && item.images.length > 1) {
-      modalGallery.innerHTML = item.images
-        .map(
-          (img, i) =>
-            `<div class="rounded-sm overflow-hidden cursor-pointer group/img" data-gallery-img="${img}">
-              <img src="${img}" alt="${item.title}" class="w-full h-48 object-cover transition-all duration-300 group-hover/img:scale-105 group-hover/img:brightness-110 ${i === 0 ? 'ring-2 ring-accent' : ''}" loading="lazy" />
-            </div>`
-        )
-        .join("");
+      modalGallery.innerHTML = item.images.map(function(img, i) {
+        return '<div class="rounded-sm overflow-hidden cursor-pointer group/img" data-gallery-img="' + img + '">' +
+          '<img src="' + img + '" alt="' + item.title + '" class="w-full h-48 object-cover transition-all duration-300 group-hover/img:scale-105 group-hover/img:brightness-110 ' + (i === 0 ? 'ring-2 ring-accent' : '') + '" loading="lazy" />' +
+          '</div>';
+      }).join("");
       modalGallery.classList.remove("hidden");
 
-      // Klik na galerijske slike
-      modalGallery.querySelectorAll("[data-gallery-img]").forEach((el) => {
-        el.addEventListener("click", (e) => {
+      modalGallery.querySelectorAll("[data-gallery-img]").forEach(function(el) {
+        el.addEventListener("click", function(e) {
           e.stopPropagation();
-          const src = (el as HTMLElement).dataset.galleryImg!;
-          modalImage.src = src;
-          // Posodobi ring na aktivni sliki
-          modalGallery.querySelectorAll("img").forEach((img) => {
+          modalImage.src = el.dataset.galleryImg;
+          modalGallery.querySelectorAll("img").forEach(function(img) {
             img.classList.remove("ring-2", "ring-accent");
           });
-          (el.querySelector("img") as HTMLElement).classList.add("ring-2", "ring-accent");
+          el.querySelector("img").classList.add("ring-2", "ring-accent");
         });
       });
     } else {
@@ -287,7 +258,6 @@ const latestNews = allNews.slice(0, 5);
       modalGallery.classList.add("hidden");
     }
 
-    // Prikaži modal
     modal.classList.remove("pointer-events-none", "opacity-0");
     modal.classList.add("pointer-events-auto", "opacity-100");
     modalContent.classList.remove("translate-y-8");
@@ -301,29 +271,24 @@ const latestNews = allNews.slice(0, 5);
     modalContent.classList.add("translate-y-8");
     modalContent.classList.remove("translate-y-0");
     document.body.style.overflow = "";
-    // Ustavi medije
     modalYoutubeIframe.src = "";
     modalVideo.pause();
-    setTimeout(() => {
+    setTimeout(function() {
       modal.classList.add("pointer-events-none");
       modal.classList.remove("pointer-events-auto");
     }, 300);
   }
 
-  // Klik na novico
-  document.querySelectorAll("[data-news-trigger]").forEach((trigger) => {
-    trigger.addEventListener("click", () => {
-      const id = (trigger as HTMLElement).dataset.newsId;
+  document.querySelectorAll("[data-news-trigger]").forEach(function(trigger) {
+    trigger.addEventListener("click", function() {
+      var id = trigger.dataset.newsId;
       if (id) openModal(id);
     });
   });
 
-  // Zapri modal
   modalClose.addEventListener("click", closeModal);
   modalBackdrop.addEventListener("click", closeModal);
-
-  // Escape tipka
-  document.addEventListener("keydown", (e) => {
+  document.addEventListener("keydown", function(e) {
     if (e.key === "Escape") closeModal();
   });
 </script>

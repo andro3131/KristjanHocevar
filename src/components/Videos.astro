@@ -1,19 +1,8 @@
 ---
-interface Video {
-  id: string;
-  title: string;
-}
+import { loadContent } from "../utils/content";
+import type { VideosContent } from "../types/content";
 
-const videos: Video[] = [
-  {
-    id: "ZoDM7zJEvE0",
-    title: "Drugje",
-  },
-  {
-    id: "2Y-ZYdAuKdQ",
-    title: "Ne vid'm ure",
-  },
-];
+const data = loadContent<VideosContent>("videos");
 ---
 
 <section id="videospoti" class="py-24 md:py-32 bg-surface">
@@ -21,19 +10,19 @@ const videos: Video[] = [
     <!-- Naslov -->
     <div class="text-center mb-16 fade-in">
       <p class="text-accent tracking-[0.3em] uppercase text-sm mb-3 font-semibold">
-        Videospoti
+        {data.sectionLabel}
       </p>
       <h2 class="reveal-text font-serif text-4xl md:text-5xl font-bold" data-reveal>
-        <span class="word"><span class="word-inner">Glasba</span></span>
-        <span class="word"><span class="word-inner" style="transition-delay: 0.1s">v</span></span>
-        <span class="word"><span class="word-inner" style="transition-delay: 0.2s">slikah</span></span>
+        {data.title.map((word, i) => (
+          <span class="word"><span class="word-inner" style={i > 0 ? `transition-delay: ${i * 0.1}s` : ""}>{word}</span></span>
+        ))}
       </h2>
     </div>
 
-    <!-- Video grid - 2 velika videa -->
+    <!-- Video grid -->
     <div class="grid md:grid-cols-2 gap-10">
       {
-        videos.map((video) => (
+        data.videos.map((video) => (
           <div class="fade-in group">
             <div class="aspect-video bg-bg rounded-sm overflow-hidden shadow-xl">
               <iframe

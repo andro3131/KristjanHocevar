@@ -1,0 +1,20 @@
+{
+  "sectionLabel": "Kontakt",
+  "title": ["Poveživa", "se"],
+  "subtitle": "Za nastope, sodelovanja ali kar tako -- pišite mi.",
+  "email": "kristjan.hocevar@gmail.com",
+  "socialLinks": [
+    {
+      "name": "YouTube",
+      "url": "https://www.youtube.com/@kristjanhocevar"
+    },
+    {
+      "name": "Instagram",
+      "url": "https://www.instagram.com/hockogasvira/"
+    },
+    {
+      "name": "Facebook",
+      "url": "https://www.facebook.com/kristjan.hocevar.1/"
+    }
+  ]
+}

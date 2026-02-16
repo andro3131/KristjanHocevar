@@ -1,6 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { allNews, formatDate } from "../data/news";
+import { loadContent, formatDate } from "../utils/content";
+import type { NewsContent } from "../types/content";
+
+const news = loadContent<NewsContent>("news");
+const allNewsItems = news.items;
 ---
 
 <Layout title="Novice | Kristjan Hočevar" description="Vse novice in dogodki - Kristjan Hočevar, kantavtor.">
@@ -50,7 +54,7 @@ import { allNews, formatDate } from "../data/news";
 
         <div class="space-y-10 md:space-y-0">
           {
-            allNews.map((item, i) => {
+            allNewsItems.map((item, i) => {
               const isRight = i % 2 !== 0;
               return (
                 <div class={`fade-in relative ${i > 0 ? "md:-mt-28" : ""}`}>
@@ -157,22 +161,10 @@ import { allNews, formatDate } from "../data/news";
               <img src="" alt="" class="w-full max-h-[500px] object-contain transition-opacity duration-300" />
             </div>
             <div id="news-modal-youtube" class="w-full aspect-video hidden">
-              <iframe
-                class="w-full h-full"
-                src=""
-                title=""
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-              ></iframe>
+              <iframe class="w-full h-full" src="" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div id="news-modal-video" class="w-full hidden">
-              <video
-                class="w-full max-h-[500px] object-contain"
-                controls
-                playsinline
-                preload="metadata"
-              >
+              <video class="w-full max-h-[500px] object-contain" controls playsinline preload="metadata">
                 <source src="" type="video/mp4" />
               </video>
             </div>
@@ -191,28 +183,31 @@ import { allNews, formatDate } from "../data/news";
     </div>
   </div>
 
-  <script>
-    import { allNews, formatDate } from "../data/news";
+  <script define:vars={{ newsItems: allNewsItems }}>
+    function fmtDate(dateStr) {
+      var d = new Date(dateStr);
+      return d.toLocaleDateString("sl-SI", { day: "numeric", month: "long", year: "numeric" });
+    }
 
-    const modal = document.getElementById("news-modal")!;
-    const modalBackdrop = document.getElementById("news-modal-backdrop")!;
-    const modalContent = document.getElementById("news-modal-content")!;
-    const modalClose = document.getElementById("news-modal-close")!;
-    const modalImageWrap = document.getElementById("news-modal-image")!;
-    const modalImage = modalImageWrap.querySelector("img") as HTMLImageElement;
-    const modalYoutubeWrap = document.getElementById("news-modal-youtube")!;
-    const modalYoutubeIframe = modalYoutubeWrap.querySelector("iframe") as HTMLIFrameElement;
-    const modalVideoWrap = document.getElementById("news-modal-video")!;
-    const modalVideo = modalVideoWrap.querySelector("video") as HTMLVideoElement;
-    const modalVideoSource = modalVideo.querySelector("source") as HTMLSourceElement;
-    const modalDate = document.getElementById("news-modal-date")!;
-    const modalType = document.getElementById("news-modal-type")!;
-    const modalTitle = document.getElementById("news-modal-title")!;
-    const modalText = document.getElementById("news-modal-text")!;
-    const modalGallery = document.getElementById("news-modal-gallery")!;
+    var modal = document.getElementById("news-modal");
+    var modalBackdrop = document.getElementById("news-modal-backdrop");
+    var modalContent = document.getElementById("news-modal-content");
+    var modalClose = document.getElementById("news-modal-close");
+    var modalImageWrap = document.getElementById("news-modal-image");
+    var modalImage = modalImageWrap.querySelector("img");
+    var modalYoutubeWrap = document.getElementById("news-modal-youtube");
+    var modalYoutubeIframe = modalYoutubeWrap.querySelector("iframe");
+    var modalVideoWrap = document.getElementById("news-modal-video");
+    var modalVideo = modalVideoWrap.querySelector("video");
+    var modalVideoSource = modalVideo.querySelector("source");
+    var modalDate = document.getElementById("news-modal-date");
+    var modalType = document.getElementById("news-modal-type");
+    var modalTitle = document.getElementById("news-modal-title");
+    var modalText = document.getElementById("news-modal-text");
+    var modalGallery = document.getElementById("news-modal-gallery");
 
-    function openModal(newsId: string) {
-      const item = allNews.find((n) => n.id === newsId);
+    function openModal(newsId) {
+      var item = newsItems.find(function(n) { return n.id === newsId; });
       if (!item) return;
 
       modalImageWrap.classList.add("hidden");
@@ -224,7 +219,7 @@ import { allNews, formatDate } from "../data/news";
 
       if (item.youtube) {
         modalYoutubeWrap.classList.remove("hidden");
-        modalYoutubeIframe.src = `https://www.youtube-nocookie.com/embed/${item.youtube}`;
+        modalYoutubeIframe.src = "https://www.youtube-nocookie.com/embed/" + item.youtube;
         modalYoutubeIframe.title = item.title;
       } else if (item.video) {
         modalVideoWrap.classList.remove("hidden");
@@ -232,41 +227,34 @@ import { allNews, formatDate } from "../data/news";
         modalVideo.load();
       } else {
         modalImageWrap.classList.remove("hidden");
-        modalImage.src = item.images?.[0] || item.thumbnail;
+        modalImage.src = (item.images && item.images[0]) || item.thumbnail;
         modalImage.alt = item.title;
       }
 
-      modalDate.textContent = formatDate(item.date);
+      modalDate.textContent = fmtDate(item.date);
       modalTitle.textContent = item.title;
       modalText.textContent = item.fullText || item.description;
 
       modalType.textContent = item.type;
-      modalType.className = `text-xs tracking-wider uppercase px-2 py-0.5 rounded-sm ${
-        item.type === "nastop"
-          ? "bg-primary/30 text-secondary"
-          : "bg-accent/10 text-accent"
-      }`;
+      modalType.className = "text-xs tracking-wider uppercase px-2 py-0.5 rounded-sm " +
+        (item.type === "nastop" ? "bg-primary/30 text-secondary" : "bg-accent/10 text-accent");
 
       if (item.images && item.images.length > 1) {
-        modalGallery.innerHTML = item.images
-          .map(
-            (img, i) =>
-              `<div class="rounded-sm overflow-hidden cursor-pointer group/img" data-gallery-img="${img}">
-                <img src="${img}" alt="${item.title}" class="w-full h-48 object-cover transition-all duration-300 group-hover/img:scale-105 group-hover/img:brightness-110 ${i === 0 ? 'ring-2 ring-accent' : ''}" loading="lazy" />
-              </div>`
-          )
-          .join("");
+        modalGallery.innerHTML = item.images.map(function(img, i) {
+          return '<div class="rounded-sm overflow-hidden cursor-pointer group/img" data-gallery-img="' + img + '">' +
+            '<img src="' + img + '" alt="' + item.title + '" class="w-full h-48 object-cover transition-all duration-300 group-hover/img:scale-105 group-hover/img:brightness-110 ' + (i === 0 ? 'ring-2 ring-accent' : '') + '" loading="lazy" />' +
+            '</div>';
+        }).join("");
         modalGallery.classList.remove("hidden");
 
-        modalGallery.querySelectorAll("[data-gallery-img]").forEach((el) => {
-          el.addEventListener("click", (e) => {
+        modalGallery.querySelectorAll("[data-gallery-img]").forEach(function(el) {
+          el.addEventListener("click", function(e) {
             e.stopPropagation();
-            const src = (el as HTMLElement).dataset.galleryImg!;
-            modalImage.src = src;
-            modalGallery.querySelectorAll("img").forEach((img) => {
+            modalImage.src = el.dataset.galleryImg;
+            modalGallery.querySelectorAll("img").forEach(function(img) {
               img.classList.remove("ring-2", "ring-accent");
             });
-            (el.querySelector("img") as HTMLElement).classList.add("ring-2", "ring-accent");
+            el.querySelector("img").classList.add("ring-2", "ring-accent");
           });
         });
       } else {
@@ -289,22 +277,22 @@ import { allNews, formatDate } from "../data/news";
       document.body.style.overflow = "";
       modalYoutubeIframe.src = "";
       modalVideo.pause();
-      setTimeout(() => {
+      setTimeout(function() {
         modal.classList.add("pointer-events-none");
         modal.classList.remove("pointer-events-auto");
       }, 300);
     }
 
-    document.querySelectorAll("[data-news-trigger]").forEach((trigger) => {
-      trigger.addEventListener("click", () => {
-        const id = (trigger as HTMLElement).dataset.newsId;
+    document.querySelectorAll("[data-news-trigger]").forEach(function(trigger) {
+      trigger.addEventListener("click", function() {
+        var id = trigger.dataset.newsId;
         if (id) openModal(id);
       });
     });
 
     modalClose.addEventListener("click", closeModal);
     modalBackdrop.addEventListener("click", closeModal);
-    document.addEventListener("keydown", (e) => {
+    document.addEventListener("keydown", function(e) {
       if (e.key === "Escape") closeModal();
     });
   </script>

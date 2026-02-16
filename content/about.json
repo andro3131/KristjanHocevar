@@ -1,0 +1,12 @@
+{
+  "sectionLabel": "O meni",
+  "title": ["Zgodbe", "za", "dušo"],
+  "image": "https://res.cloudinary.com/dewf3zos0/image/upload/w_800,q_auto,f_auto/v1771190908/564612247_25379652824975888_8730496612735750076_n_j6ypor.jpg",
+  "imageAlt": "Kristjan Hočevar",
+  "paragraphs": [
+    "Kristjan Hočevar je kantavtor, ki s svojo akustično kitaro in glasom pričara zgodbe, ki se dotaknejo srca. Njegove avtorske pesmi so iskrene, intimne in polne lepih čutenj.",
+    "Nastopa samostojno ali v družbi drugih glasbenikov. Izdal je že dve avtorski pesmi, tretja pa bo kmalu ugledala luč sveta."
+  ],
+  "ctaText": "Poslušaj pesmi",
+  "ctaLink": "#videospoti"
+}
