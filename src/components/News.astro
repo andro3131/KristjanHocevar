@@ -8,7 +8,7 @@ const latestNews = allNewsItems.slice(0, 5);
 ---
 
 <section id="novice" class="py-24 md:py-32 bg-surface">
-  <div class="max-w-5xl mx-auto px-6">
+  <div class="max-w-7xl mx-auto px-6">
     <!-- Naslov -->
     <div class="text-center mb-16 fade-in">
       <p class="text-accent tracking-[0.3em] uppercase text-sm mb-3 font-semibold">
@@ -50,9 +50,9 @@ const latestNews = allNewsItems.slice(0, 5);
                 />
 
                 <!-- Kartica -->
-                <div class={`pl-12 md:pl-0 md:w-[38%] ${isRight ? "md:ml-[51%]" : "md:ml-[11%]"}`}>
+                <div class={`pl-12 md:pl-0 md:w-[46%] ${isRight ? "md:ml-[52%]" : "md:ml-[2%]"}`}>
                   <div
-                    class={`news-card group rounded-sm border cursor-pointer transition-all duration-300 overflow-hidden ${
+                    class={`news-card group rounded-sm border cursor-pointer transition-all duration-300 overflow-hidden flex flex-col md:flex-row ${
                       item.upcoming
                         ? "bg-accent/5 border-accent/30 hover:border-accent/50"
                         : "bg-bg/50 border-text/5 hover:border-text/15"
@@ -61,17 +61,17 @@ const latestNews = allNewsItems.slice(0, 5);
                     data-news-id={item.id}
                   >
                     <!-- Slika -->
-                    <div class="aspect-[16/10] overflow-hidden">
+                    <div class="md:w-2/5 flex-shrink-0 overflow-hidden">
                       <img
                         src={item.thumbnail}
                         alt={item.title}
-                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        class="w-full h-full object-cover aspect-[16/10] md:aspect-auto md:min-h-full transition-transform duration-500 group-hover:scale-105"
                         loading="lazy"
                       />
                     </div>
 
                     <!-- Vsebina -->
-                    <div class="p-4">
+                    <div class="p-4 md:p-5 flex flex-col justify-center flex-1 min-w-0">
                       <div class="flex flex-wrap items-center gap-2 mb-2">
                         <time class="text-xs text-muted">{formatDate(item.date)}</time>
                         <span
