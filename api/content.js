@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const VALID_FILES = ["hero", "about", "videos", "gallery", "news", "contact"];
+const VALID_FILES = ["hero", "about", "ponudba", "videos", "gallery", "news", "contact"];
 
 function verifyToken(req) {
   const auth = req.headers.authorization;

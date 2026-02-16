@@ -1,0 +1,24 @@
+{
+  "sectionLabel": "Ponudba",
+  "title": ["Glasba", "v živo"],
+  "intro": "Glasba je zame več kot samo ozadje – je energija, vzdušje in dober občutek, ki ostane še dolgo po zadnjem akordu.",
+  "offers": [
+    {
+      "title": "Akustični nastop",
+      "icon": "acoustic",
+      "description": "Najpogosteje nastopam akustično, kjer ob petju igram kitaro in ustvarjam prijetno, sproščeno atmosfero, primerno za pogovor, druženje in uživanje v trenutku.",
+      "details": "Na repertoarju so znane slovenske in tuje skladbe – od balad do bolj ritmičnih pesmi – vse prilagojeno prostoru in publiki.",
+      "tags": ["Hoteli", "Restavracije", "Bari", "Poroke", "Zasebne zabave"]
+    },
+    {
+      "title": "Nastop z bandom",
+      "icon": "band",
+      "description": "Skupaj izvajamo rock in country glasbo tujih, slovenskih in ex-YU izvajalcev – z več energije, polnejšim zvokom in koncertnim vzdušjem.",
+      "details": "Ta oblika nastopa je primerna za večje dogodke, veselice, prireditve in večerne koncertne večere.",
+      "tags": ["Večji dogodki", "Veselice", "Prireditve", "Koncertni večeri"]
+    }
+  ],
+  "closing": "Vedno se trudim, da se glasba prilagodi dogodku – po glasnosti, repertoarju in občutku. Po dogovoru so možne tudi glasbene želje, posebni seti ali sodelovanje z drugimi glasbeniki.",
+  "ctaText": "Kontaktiraj me",
+  "ctaLink": "#kontakt"
+}

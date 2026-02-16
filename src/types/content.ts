@@ -50,6 +50,24 @@ export interface NewsContent {
   items: NewsItem[];
 }
 
+export interface PonudbaOffer {
+  title: string;
+  icon: string;
+  description: string;
+  details: string;
+  tags: string[];
+}
+
+export interface PonudbaContent {
+  sectionLabel: string;
+  title: string[];
+  intro: string;
+  offers: PonudbaOffer[];
+  closing: string;
+  ctaText: string;
+  ctaLink: string;
+}
+
 export interface ContactContent {
   sectionLabel: string;
   title: string[];
