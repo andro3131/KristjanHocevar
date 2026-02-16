@@ -71,6 +71,20 @@ export const allNews: NewsItem[] = [
     type: "novica",
   },
   {
+    id: "videospot-zunaj",
+    date: "2025-08-28",
+    title: "Novi videospot je zunaj!",
+    description: "Vabljeni k ogledu novega videospota Ne vid'm ure.",
+    fullText:
+      "Novi videospot je zunaj! Vabljeni k ogledu! Poglejte si ga na YouTube: https://youtu.be/2Y-ZYdAuKdQ",
+    thumbnail:
+      "https://res.cloudinary.com/dewf3zos0/image/upload/w_400,h_250,c_fill,g_auto,q_auto,f_auto/v1771190897/Screenshot_2026-02-15_at_21.52_copy3_e2ff8v.jpg",
+    images: [
+      "https://res.cloudinary.com/dewf3zos0/image/upload/w_900,q_auto,f_auto/v1771190897/Screenshot_2026-02-15_at_21.52_copy3_e2ff8v.jpg",
+    ],
+    type: "novica",
+  },
+  {
     id: "videospot-ne-vidm-ure",
     date: "2025-10-05",
     title: "Izšel videospot Ne vid'm ure",
