@@ -56,6 +56,18 @@ export const allNews: NewsItem[] = [
     type: "nastop",
   },
   {
+    id: "nastop-novo-mesto",
+    date: "2025-06-12",
+    title: "Nastop v Kulturnem centru Janez Trdina",
+    description: "Nastop v Kulturnem centru Janez Trdina v Novem mestu.",
+    thumbnail:
+      "https://res.cloudinary.com/dewf3zos0/image/upload/w_400,h_250,c_fill,g_auto,q_auto,f_auto/v1771236947/504046645_18047778170570840_4408957813491103299_n_arxmdx.jpg",
+    images: [
+      "https://res.cloudinary.com/dewf3zos0/image/upload/w_900,q_auto,f_auto/v1771236947/504046645_18047778170570840_4408957813491103299_n_arxmdx.jpg",
+    ],
+    type: "nastop",
+  },
+  {
     id: "violina",
     date: "2025-08-20",
     title: "Včasih morata tud dva prijet za violino",
