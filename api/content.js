@@ -13,15 +13,16 @@ function verifyToken(req) {
 }
 
 async function githubApi(path, options = {}) {
+  const { headers: optHeaders, ...rest } = options;
   const res = await fetch(
     `https://api.github.com/repos/${process.env.GITHUB_REPO}/contents/${path}`,
     {
+      ...rest,
       headers: {
         Authorization: `token ${process.env.GITHUB_TOKEN}`,
         Accept: "application/vnd.github.v3+json",
-        ...options.headers,
+        ...optHeaders,
       },
-      ...options,
     }
   );
   return res;
