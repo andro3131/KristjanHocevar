@@ -106,6 +106,21 @@ export const allNews: NewsItem[] = [
     ],
     type: "nastop",
   },
+  {
+    id: "moto-party-krizevci",
+    date: "2024-07-02",
+    title: "Moto Party - Križevci",
+    description: "MK Crusanders - Blue Star Band.",
+    thumbnail:
+      "https://res.cloudinary.com/dewf3zos0/image/upload/w_400,h_250,c_fill,g_auto,q_auto,f_auto/v1771237749/469041781_18026901236570840_6039278375481299996_n_rqtcen.jpg",
+    images: [
+      "https://res.cloudinary.com/dewf3zos0/image/upload/w_900,q_auto,f_auto/v1771237749/469041781_18026901236570840_6039278375481299996_n_rqtcen.jpg",
+      "https://res.cloudinary.com/dewf3zos0/image/upload/w_900,q_auto,f_auto/v1771237748/468976968_18026901248570840_1218242488231084477_n_hj1bbc.jpg",
+      "https://res.cloudinary.com/dewf3zos0/image/upload/w_900,q_auto,f_auto/v1771237748/469329916_18026901227570840_2992529472455280538_n_gs8vfa.jpg",
+      "https://res.cloudinary.com/dewf3zos0/image/upload/w_900,q_auto,f_auto/v1771237747/469083312_18026901149570840_2034380886262010850_n_kzh2mf.jpg",
+    ],
+    type: "nastop",
+  },
 ];
 
 export function formatDate(dateStr: string): string {
