@@ -1,6 +1,9 @@
 {
   "sectionLabel": "Kontakt",
-  "title": ["Poveživa", "se"],
+  "title": [
+    "Poveživa",
+    "se"
+  ],
   "subtitle": "Za nastope, sodelovanja ali kar tako -- pišite mi.",
   "email": "kristjan.hocevar@gmail.com",
   "socialLinks": [
