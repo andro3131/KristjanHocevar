@@ -347,29 +347,25 @@ function renderPonudba(el, d) {
   el.innerHTML = '<h2>Ponudba</h2>' +
     field('Oznaka sekcije', 'text', 'ponudba-sectionLabel', d.sectionLabel) +
     field('Naslov (besede, ločene z vejico)', 'text', 'ponudba-title', d.title.join(', ')) +
-    '<div class="field"><label>Uvodni tekst</label><textarea id="ponudba-intro">' + esc(d.intro) + '</textarea></div>' +
-    '<h3 style="margin-top:1rem;margin-bottom:0.5rem">Ponudbe</h3>' +
-    d.offers.map(function(o, i) {
-      return '<div class="card"><div class="card-header"><h3>' + esc(o.title || 'Nova ponudba') + '</h3><button class="btn btn-danger btn-sm" onclick="removeOffer(' + i + ')">Odstrani</button></div>' +
-        '<div class="field"><label>Naslov</label><input data-offer-title="' + i + '" value="' + esc(o.title) + '" /></div>' +
-        '<div class="field"><label>Ikona (acoustic / band)</label><input data-offer-icon="' + i + '" value="' + esc(o.icon) + '" /></div>' +
-        '<div class="field"><label>Opis</label><textarea data-offer-desc="' + i + '">' + esc(o.description) + '</textarea></div>' +
-        '<div class="field"><label>Podrobnosti</label><textarea data-offer-details="' + i + '">' + esc(o.details) + '</textarea></div>' +
-        '<div class="field"><label>Oznake (ločene z vejico)</label><input data-offer-tags="' + i + '" value="' + esc(o.tags.join(', ')) + '" /></div>' +
-        '</div>';
+    '<h3 style="margin-top:1rem;margin-bottom:0.5rem">Odstavki</h3>' +
+    d.paragraphs.map(function(p, i) {
+      return '<div class="field"><label>Odstavek ' + (i+1) + '</label><textarea data-ponudba-para="' + i + '">' + esc(p) + '</textarea></div>';
     }).join('') +
-    '<button class="btn btn-secondary btn-sm" onclick="addOffer()">+ Dodaj ponudbo</button>' +
-    '<div class="field" style="margin-top:1rem"><label>Zaključni tekst</label><textarea id="ponudba-closing">' + esc(d.closing) + '</textarea></div>' +
+    '<button class="btn btn-secondary btn-sm" onclick="addPonudbaParagraph()">+ Dodaj odstavek</button>' +
+    '<h3 style="margin-top:1.5rem;margin-bottom:0.5rem">Slika</h3>' +
+    field('Slika URL', 'text', 'ponudba-image', d.image) +
+    (d.image ? '<img class="img-preview" src="' + esc(d.image) + '" id="ponudba-image-preview" />' : '<img class="img-preview" id="ponudba-image-preview" style="display:none" />') +
+    '<button class="btn btn-secondary btn-sm" style="margin-top:0.5rem" onclick="uploadImage(function(url){document.getElementById(\'ponudba-image\').value=url;var prev=document.getElementById(\'ponudba-image-preview\');prev.src=url;prev.style.display=\'block\';})">Naloži sliko</button>' +
+    field('Alt tekst slike', 'text', 'ponudba-imageAlt', d.imageAlt) +
     field('CTA tekst', 'text', 'ponudba-ctaText', d.ctaText) +
     field('CTA link', 'text', 'ponudba-ctaLink', d.ctaLink) +
     '<div class="actions"><button class="btn btn-primary" onclick="saveSection(\'ponudba\')">Shrani</button></div>';
 }
 
-function addOffer() {
-  sectionData['ponudba'].offers.push({title:'',icon:'acoustic',description:'',details:'',tags:[]});
+function addPonudbaParagraph() {
+  sectionData['ponudba'].paragraphs.push('');
   renderSection('ponudba');
 }
-function removeOffer(i) { sectionData['ponudba'].offers.splice(i,1); renderSection('ponudba'); }
 
 function renderVideos(el, d) {
   el.innerHTML = '<h2>Videospoti</h2>' +
@@ -483,17 +479,8 @@ function collectFormData(section) {
     };
     case 'ponudba': return {
       sectionLabel: val('ponudba-sectionLabel'), title: val('ponudba-title').split(',').map(function(s){return s.trim();}),
-      intro: val('ponudba-intro'),
-      offers: Array.from(document.querySelectorAll('[data-offer-title]')).map(function(el, i) {
-        return {
-          title: el.value,
-          icon: document.querySelector('[data-offer-icon="'+i+'"]').value,
-          description: document.querySelector('[data-offer-desc="'+i+'"]').value,
-          details: document.querySelector('[data-offer-details="'+i+'"]').value,
-          tags: document.querySelector('[data-offer-tags="'+i+'"]').value.split(',').map(function(s){return s.trim();}).filter(Boolean)
-        };
-      }),
-      closing: val('ponudba-closing'),
+      paragraphs: Array.from(document.querySelectorAll('[data-ponudba-para]')).map(function(el){return el.value;}),
+      image: val('ponudba-image'), imageAlt: val('ponudba-imageAlt'),
       ctaText: val('ponudba-ctaText'), ctaLink: val('ponudba-ctaLink')
     };
     case 'videos': return {
