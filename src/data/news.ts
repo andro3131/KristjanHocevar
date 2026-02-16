@@ -94,6 +94,18 @@ export const allNews: NewsItem[] = [
       "https://res.cloudinary.com/dewf3zos0/video/upload/w_400,h_250,c_fill,g_auto,q_auto,f_auto,so_1/v1771237543/AQMgs28fMTo4H9rexyGlCImnm7IcXJ2i4Y7ckuURVO2qqsqcglHue66hnhunXBHUZ8byL4enMwtm2-EV79r6Pt3H_jsleqs.jpg",
     type: "nastop",
   },
+  {
+    id: "nastop-poroka-urska",
+    date: "2024-07-06",
+    title: "Nastop na poroki z Urško Videnšek",
+    description: "Nastop na poroki z Urško Videnšek.",
+    thumbnail:
+      "https://res.cloudinary.com/dewf3zos0/image/upload/w_400,h_250,c_fill,g_auto,q_auto,f_auto/v1771237622/485731066_2161787524239686_1055416382522176688_n_uqa39p.jpg",
+    images: [
+      "https://res.cloudinary.com/dewf3zos0/image/upload/w_900,q_auto,f_auto/v1771237622/485731066_2161787524239686_1055416382522176688_n_uqa39p.jpg",
+    ],
+    type: "nastop",
+  },
 ];
 
 export function formatDate(dateStr: string): string {
