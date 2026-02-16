@@ -1,30 +1,7 @@
 ---
-const images = [
-  {
-    src: "https://res.cloudinary.com/dewf3zos0/image/upload/w_800,q_auto,f_auto/v1771190903/Screenshot_2026-02-15_at_21.49_copy_z3lroc.jpg",
-    alt: "Kristjan Hočevar nastop",
-  },
-  {
-    src: "https://res.cloudinary.com/dewf3zos0/image/upload/w_800,q_auto,f_auto/v1771190900/Screenshot_2026-02-15_at_22.10_copy_pp9xdw.jpg",
-    alt: "Kristjan Hočevar nastop",
-  },
-  {
-    src: "https://res.cloudinary.com/dewf3zos0/image/upload/w_800,q_auto,f_auto/v1771190897/Screenshot_2026-02-15_at_21.52_copy3_e2ff8v.jpg",
-    alt: "Kristjan Hočevar nastop",
-  },
-  {
-    src: "https://res.cloudinary.com/dewf3zos0/image/upload/w_800,q_auto,f_auto/v1771190895/Screenshot_2026-02-15_at_21.50_copy_kzoc8n.jpg",
-    alt: "Kristjan Hočevar nastop",
-  },
-  {
-    src: "https://res.cloudinary.com/dewf3zos0/image/upload/w_800,q_auto,f_auto/v1771190891/Screenshot_2026-02-15_at_21.52_copy_tnadik.jpg",
-    alt: "Kristjan Hočevar nastop",
-  },
-  {
-    src: "https://res.cloudinary.com/dewf3zos0/image/upload/w_800,q_auto,f_auto/v1771190889/Screenshot_2026-02-15_at_21.50_copy2_qks0df.jpg",
-    alt: "Kristjan Hočevar nastop",
-  },
-];
+import { allImages } from "../data/gallery";
+
+const displayImages = allImages.slice(0, 6);
 ---
 
 <section id="galerija" class="py-24 md:py-32">
@@ -42,7 +19,7 @@ const images = [
     <!-- Masonry-like grid s staggered entrance -->
     <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
       {
-        images.map((image, i) => (
+        displayImages.map((image, i) => (
           <div
             class="stagger-item break-inside-avoid"
             data-stagger
@@ -65,6 +42,28 @@ const images = [
         ))
       }
     </div>
+
+    <!-- Poglej več -->
+    {allImages.length > 6 && (
+      <div class="text-center mt-12 fade-in">
+        <a
+          href="/galerija"
+          class="btn-fill inline-flex items-center gap-2 px-8 py-3 border border-text/30 text-text font-semibold tracking-wider uppercase text-sm rounded-sm"
+        >
+          Poglej več
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-4 h-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+    )}
   </div>
 </section>
 
@@ -75,7 +74,6 @@ const images = [
 >
   <div id="gallery-lightbox-backdrop" class="absolute inset-0 bg-bg/95 backdrop-blur-sm"></div>
   <div class="absolute inset-0 flex items-center justify-center p-4 md:p-8">
-    <!-- Zapri -->
     <button
       id="gallery-lightbox-close"
       class="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-bg/50 text-text/70 hover:text-text hover:bg-bg/80 transition-colors"
@@ -86,7 +84,6 @@ const images = [
       </svg>
     </button>
 
-    <!-- Prejšnja -->
     <button
       id="gallery-lightbox-prev"
       class="absolute left-3 md:left-6 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-bg/50 text-text/70 hover:text-text hover:bg-bg/80 transition-colors"
@@ -97,7 +94,6 @@ const images = [
       </svg>
     </button>
 
-    <!-- Slika -->
     <img
       id="gallery-lightbox-img"
       src=""
@@ -105,7 +101,6 @@ const images = [
       class="max-w-full max-h-[85vh] object-contain rounded-sm transform scale-95 transition-transform duration-300"
     />
 
-    <!-- Naslednja -->
     <button
       id="gallery-lightbox-next"
       class="absolute right-3 md:right-6 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-bg/50 text-text/70 hover:text-text hover:bg-bg/80 transition-colors"
@@ -118,7 +113,7 @@ const images = [
   </div>
 </div>
 
-<script define:vars={{ images }}>
+<script define:vars={{ images: displayImages }}>
   const lightbox = document.getElementById("gallery-lightbox");
   const lightboxImg = document.getElementById("gallery-lightbox-img");
   const lightboxClose = document.getElementById("gallery-lightbox-close");
